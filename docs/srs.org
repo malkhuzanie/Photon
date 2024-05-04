@@ -1,0 +1,160 @@
+#+OPTIONS: H:7 num:4
+
+* Introduction
+** Purpose
+The purpose of this document is to outline the functional and
+non-functional requirements of warehouse management system software.
+A Warehouse Management System (WMS) is a complex software package that
+helps manage inventory, storage locations, and the workforce, to
+ensure that customer orders are picked quickly, packed, and shipped.
+A typical WMS knows about every item in the warehouse, its physical
+dimensions, how it is packed by the vendor, all the storage locations
+in the warehouse, and their addresses and physical dimensions The WMS
+receives customer orders and transforms them to pick lists organized
+for easy retrieval WMS tracks the assembly of each customer order.
+
+@@latex:\vspace*{3\baselineskip}@@
+
+@@latex:\clearpage@@
+
+** Scope
+The scope of this project include: 
+- record the arrival and departure of inventory.
+- recording the precise location of stock within the warehouse.
+- optimising the use of available space.
+- coordinating tasks for maximum efficiency.
+- dealing with returns: 
+    - monitor and track the returned inventory.
+- storing barcode, and labels for easier storage and retrieval. 
+- real-time tracking for shipping
+
+** Definitions
+*** Logistics
+Logistics coordinates the movement and storage of resources such as
+goods, equipment and inventory. For manufacturers, logistics starts
+wiReceiving and Putaway:th the incoming supply of raw materials and carries through to the
+delivery of finished products to customers.
+
+@@latex:\clearpage@@
+* Overall description
+** System Environment
+
+*** The product flow
+The supply chain is the sequence of processes through which product
+moves from its origin toward the customer.
+
+@@latex:\vspace*{\baselineskip}@@
+The supply chaing consist of:
+- Inbound logistics is the way materials and other goods are brought
+  into a company. This process includes the steps to order, receive,
+  store, transport and manage incoming supplies.
+- Outbound logistics focuses on the demand side of the supply-demand
+  equation. The process involves storing and moving goods to the
+  customer or end user. The steps include order fulfillment, packing,
+  shipping, delivery and customer service related to delivery.
+
+@@latex:\vspace*{3\baselineskip}@@
+[[./supply_chain.png]]
+
+Figure 1.0 The supply chain process, The warehouse represents the storage
+
+@@latex:\clearpage@@
+
+** Product Functions
+*** Functional Requirements
+**** The warhouse user registration
+- The administrator is elligable of registering users.
+- Each employee should be registered in the warehouse in order use
+  warehouse utilities.
+
+**** Inventory management
+- *Stock Tracking*\\
+  The system should maintain accurate records of the current stock
+  quantities for each product, including the ability to track inventory
+  at different levels (e.g., overall warehouse, zones, or specific
+  locations).
+
+- *Product Information*\\
+  The system should store and manage detailed product information, such
+  as product codes, master data, descriptions, dimensions, weights, and
+  any other relevant attributes.
+
+- *Locations and Zones*\\
+  The system should allow for the definition and management of different
+  storage locations and zones within the warehouse, enabling efficient
+  organization and retrieval of inventory.
+
+- *Reorder Management*\\
+  The system should have mechanisms for setting reorder points and
+  generating purchase orders or replenishment requests when inventory
+  levels fall below specified thresholds.
+
+- *Alerts and Notifications*\\
+  The system should provide configurable alerts and notifications for
+  low stock levels, expired products, or other inventory-related events
+  that require attention.
+
+- *Reporting and Analytics*\\
+  The system should offer robust reporting and analytics capabilities
+  for inventory-related data, including stock reports, inventory
+  turnover rates, and more.
+
+@@latex:\clearpage@@
+**** Inbound processes
+- *Receiving*
+  - *The process of receiving goods pass through the following sequence of
+     operations:*
+    - Receiving goods begins with a notification of the arrival of goods
+    - Once the product is arrived it is unloaded and possibly staged for
+      put away.
+    - The product will be scanned to register its arrival so that
+      owenership is assumed, payments dispatched, and so that it is known
+      to be available to fulfill customer demand.
+    - The product will be inspected and any exceptions noted, such as
+      damage, incorrect counts, wrong descriptions.
+
+  - *Barcode and RFID Scanning*\\
+      The system should support barcode and RFID scanning for rapid and
+      accurate identification of incoming products.
+
+- *Put-away*
+  - Before the product can be put away, The following operations should be
+    performed:
+      - An appropriate storage location must be dertermined.
+      - The group to which the product belongs to should also be detemined.
+
+  - The system shall support putaway verification through
+    barcode scanning, ensuring that items are placed in the correct locations.
+
+@@latex:\clearpage@@
+**** Outbound Processes
+- *Order Picking*\\
+    Order picking is the process of collecting items from a warehouse to complete customer orders,
+    It consists of:
+      - Checking:
+        - verifying that the inventory is available to ship.
+        - Checks the order against available inventory and identifies any shortages.
+      - The warehouse must produce pick lists to guide the order-picking.
+      - The warehouse must produce any necessary shipping documentation and schedule
+        the order-picking and shipping.
+
+- *Returns Management*\\
+  The system should support the processing of customer returns,
+  including receiving, inspection, and restocking or disposal of
+  returned items.
+    
+
+- *Purchase Order Notification*
+  - The warehouse / user should receive a notifications upon sending a purchase
+    order .
+  - customers shall receive notifications about order confirmation,
+    order fulfillment, and shipping details.
+
+- *Reporting and Analytics*\\
+  The system should provide comprehensive reporting and analytics
+  capabilities related to order fulfillment, such as order status.
+
+*** Non-Functional Requirements
+*...*\\
+*To be determined*\\
+*...*
