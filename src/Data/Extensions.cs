@@ -1,4 +1,4 @@
-namespace wms.Data;
+namespace Photon.Data;
 
 public static class Extensions
 {
@@ -7,8 +7,10 @@ public static class Extensions
     using (var scope = host.Services.CreateScope())
     {
       var services = scope.ServiceProvider;
-      var context = services.GetRequiredService<WmsContext>();
+      var context = services.GetRequiredService<PhotonContext>();
+      context.Database.EnsureDeleted();
       context.Database.EnsureCreated();
+      DbInitialiser.Initialise(context);
     }
   }
 }

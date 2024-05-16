@@ -1,13 +1,8 @@
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+namespace Photon.Models;
 
-namespace wms.Models;
-
-public class RoleRight 
+public class PermissionRole 
 {
-  public long Id { get; set; }
-  public long RoleId { get; set; }
-  public long PermissionId { get; set; }
-  public required Role Role { get; set; }
-  public required Permission Permission { get; set; }
+  public int Id { get; init; }
+  public virtual required Role Role { get; set; }
+  public virtual required Permission Permission { get; set; }
 }

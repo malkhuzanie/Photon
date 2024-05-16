@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
-namespace wms.Models;
+namespace Photon.Models;
 
 public class Permission 
 {
-  public long Id { get; set; }
+  public int Id { get; init; }
   public required string Name { get; set; }
+  
+  [JsonIgnore]
+  public virtual ICollection<Role> Roles { get; } = new List<Role>();
 }
