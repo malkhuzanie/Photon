@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 namespace Photon.Models;

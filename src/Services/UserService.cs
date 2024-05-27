@@ -1,20 +1,38 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 using Photon.Models;
 using Photon.Data;
 using Photon.DTOs;
 using Photon.Mapping;
+using Photon.Encryption;
+using Photon.Exceptions;
+using Photon.Http;
 
 namespace Photon.Services;
 
 public class UserService(PhotonContext context)
 {
-  public async Task<bool> UsernameExists(string username)
+  public async Task<int?> UsernameExists(string username)
   {
-    return await context.Users
-      .Where(u => u.Username == username)
-      .FirstOrDefaultAsync() != null;
+    return (await context.Users
+        .Where(u => u.Username == username)
+        .FirstOrDefaultAsync()
+      )?.Id;
   }
-  
+
+  public async Task<bool> CheckPassword(int id, string password)
+  {
+    return await Hasher.VerifyPassword(
+      (await context.Users.SingleAsync(u => u.Id == id)).PasswordHash,
+      password
+    );
+  }
+
+  private async Task<User?> Find(int id)
+  {
+    return await context.Users.FindAsync(id);
+  }
+
   public async Task<IEnumerable<User>> GetAll()
   {
     return await context.Users
@@ -37,18 +55,42 @@ public class UserService(PhotonContext context)
       .SingleOrDefaultAsync(u => u.Id == id);
   }
 
-  public async Task<MappingResult<User>> Create(UserDto _user)
+  public async Task<User> Create(UserDto _user)
   {
     var user = await _user.FromDto(context);
-    if (user.Result != null)
+    if (await UsernameExists(user.Username) != null)
     {
-      if (await UsernameExists(user.Result.Username))
-      {
-        return new MappingResult<User>("username exists", null);
-      }
-      context.Add(user.Result);
-      await context.SaveChangesAsync();
+      throw new IllegalArgumentException("username already exists");
     }
+
+    context.Add(user);
+    await context.SaveChangesAsync();
     return user;
+  }
+
+  public async Task<bool> Delete(int id)
+  {
+    if (await context.Users.FindAsync(id) is not { } user)
+    {
+      return false;
+    }
+
+    context.Users.Remove(user);
+    await context.SaveChangesAsync();
+    return true;
+  }
+
+  public async Task Update(int id, UserDto _user)
+  {
+    var user = await Find(id);
+    if (user == null)
+    {
+      throw new NotFoundException("user is not found in the database");
+    }
+
+    var newUser = (await _user.FromDto(context));
+    context.Users.Remove(user);
+    context.Add(newUser);
+    await context.SaveChangesAsync();
   }
 }

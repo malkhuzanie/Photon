@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using Photon.Encryption;
@@ -8,23 +9,23 @@ namespace Photon.Models;
 public class User
 {
   public int Id { get; init; }
-  public required string Username { get; set; }
-  public required string FirstName { get; set; }
-  public required string LastName { get; set; }
-  public required string Email { get; set; }
+  [MaxLength(30)] public required string Username { get; set; }
+  [MaxLength(255)] public required string FirstName { get; set; }
+  [MaxLength(255)] public required string LastName { get; set; }
+  [MaxLength(255)] public required string Email { get; set; }
 
-  private string password = string.Empty;
+  [JsonIgnore] public string PasswordHash { get; private set; }
+  
   public required string Password
   {
-    get => password;
-    init => password = Hasher.Hash(value).Result;
+    set => PasswordHash = Hasher.Hash(value).Result;
   }
   
   public required string Image { get; set; }
   public required int HourlyWage { get; set; }
   public required DateOnly HireDate { get; set; }
   
-  [JsonIgnore]
+  [JsonIgnore] 
   public int FacilityId { get; set; }
   public virtual required Facility Facility { get; set; }
   

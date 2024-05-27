@@ -3,19 +3,15 @@ using Photon.Models;
 
 namespace Photon.Data;
 
-public class PhotonContext : DbContext
+public class PhotonContext(DbContextOptions<PhotonContext> options, IConfiguration config) 
+  : DbContext(options)
 {
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
     optionsBuilder
-      .UseNpgsql("Host=localhost; Database=wms_temp")
+      .UseNpgsql($"Host={config["DbConfig:Host"]}; Database={config["DbConfig:Database"]}")
       .UseLazyLoadingProxies()
       .UseSnakeCaseNamingConvention();
-  }
-  
-  public PhotonContext(DbContextOptions<PhotonContext> options)
-      : base(options)
-  {
   }
 
   public DbSet<Permission> Permissions { get; set; }

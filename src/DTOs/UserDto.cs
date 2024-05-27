@@ -7,6 +7,7 @@ namespace Photon.DTOs;
 
 public class UserDto
 {
+  public int? Id { get; set; }
   // [RegularExpression("^(?=.{8, 20})(?![._])(?!.*[._]{2})[a-zA-Z._] + (?<![._])")]
   public required string Username { get; set; }
   

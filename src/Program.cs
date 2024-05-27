@@ -1,8 +1,11 @@
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.IdentityModel.Logging;
 using Photon.Data;
 using Photon.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.SetupAuthentication();
 builder.Services.RegisterServices();
 
 var app = builder.Build();
@@ -14,10 +17,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// app.UseMiniProfiler();
-
 app.CreateDbIfNotExists();
 app.UseHttpsRedirection();
+app.UseExceptionHandler(_ => {});
 
+// app.UseAuthentication();
+// app.UseAuthorization();
+
+// app.MapControllers().RequireAuthorization();
 app.MapControllers();
 app.Run();
