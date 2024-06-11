@@ -9,13 +9,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8" />
-    <PackageReference Include="Microsoft.EntityFrameWorkCore" Version="8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8" />
+    <PackageReference Include="Microsoft.EntityFrameWorkCore" Version="*" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="*" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8" />
-    <PackageReference Include="EFCore.NamingConventions" Version="8" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="*" />
+    <PackageReference Include="EFCore.NamingConventions" Version="*" />
     <PackageReference Include="MiniProfiler.AspNetCore.Mvc" Version="4.3.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="*" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="*" />
   </ItemGroup>
 
   <ItemGroup>
