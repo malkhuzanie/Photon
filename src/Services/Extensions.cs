@@ -38,7 +38,7 @@ public static class Extensions
   public static void RegisterServices(this IServiceCollection services)
   {
     services.AddExceptionHandler<ExceptionHandler>();
-    
+
     services.AddControllers()
       .AddJsonOptions(options =>
       {
@@ -61,9 +61,11 @@ public static class Extensions
     // services.AddMiniProfiler();
 
     services.AddNpgsql<PhotonContext>("Host=localhost; Database=wms_temp");
+    services.AddScoped<FacilityService>();
     services.AddScoped<UserService>();
     services.AddScoped<RoleService>();
     services.AddScoped<AuthService>();
     services.AddScoped<PermissionService>();
+    services.AddScoped<EquipmentService>();
   }
 }

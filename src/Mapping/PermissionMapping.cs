@@ -5,7 +5,7 @@ namespace Photon.Mapping;
 
 public static partial class Mapper 
 {
-  public static Task<Permission> FromDto(this PermissionDto perm, PhotonContext context)
+  public static Task<Permission> ToPermission(this PermissionDto perm, PhotonContext context)
   {
     return Task.Run(() => new Permission { Name = perm.Name });
   }

@@ -33,4 +33,13 @@ public class PermissionController(PermissionService service) : ControllerBase
     );
   }
 
+  [HttpDelete("{id:int}")]
+  public async Task<ActionResult> Delete(int id)
+  {
+    if (await service.Delete(id) == false)
+    {
+      return BadRequest("Permission is not found.");
+    }
+    return NoContent();
+  }
 }

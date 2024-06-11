@@ -6,37 +6,34 @@ using Photon.DTOs;
 using Photon.Mapping;
 using Photon.Encryption;
 using Photon.Exceptions;
-using Photon.Http;
+using Photon.Interfaces;
 
 namespace Photon.Services;
 
-public class UserService(PhotonContext context)
+public class UserService(PhotonContext context) : IEntityService<User, UserDto>
 {
   public async Task<int?> UsernameExists(string username)
   {
-    return (await context.Users
-        .Where(u => u.Username == username)
-        .FirstOrDefaultAsync()
-      )?.Id;
+    return (await context.Users.Where(u => u.Username == username)
+        .FirstOrDefaultAsync())
+      ?.Id;
   }
 
   public async Task<bool> CheckPassword(int id, string password)
   {
     return await Hasher.VerifyPassword(
       (await context.Users.SingleAsync(u => u.Id == id)).PasswordHash,
-      password
-    );
+      password);
   }
 
-  private async Task<User?> Find(int id)
+  public async Task<User?> Find(int id)
   {
     return await context.Users.FindAsync(id);
   }
 
   public async Task<IEnumerable<User>> GetAll()
   {
-    return await context.Users
-      .Include(u => u.Facility)
+    return await context.Users.Include(u => u.Facility)
       .Include(u => u.Equipment)
       .Include(u => u.Roles)
       .ThenInclude(r => r.Permissions)
@@ -46,8 +43,7 @@ public class UserService(PhotonContext context)
 
   public async Task<User?> GetById(int id)
   {
-    return await context.Users
-      .Include(u => u.Facility)
+    return await context.Users.Include(u => u.Facility)
       .Include(u => u.Equipment)
       .Include(u => u.Roles)
       .ThenInclude(r => r.Permissions)
@@ -57,7 +53,7 @@ public class UserService(PhotonContext context)
 
   public async Task<User> Create(UserDto _user)
   {
-    var user = await _user.FromDto(context);
+    var user = await _user.ToUser(context);
     if (await UsernameExists(user.Username) != null)
     {
       throw new IllegalArgumentException("username already exists");
@@ -88,8 +84,9 @@ public class UserService(PhotonContext context)
       throw new NotFoundException("user is not found in the database");
     }
 
-    var newUser = (await _user.FromDto(context));
-    context.Users.Remove(user);
+    var newUser = (await _user.ToUser(context));
+    user = newUser;
+    // context.Users.Remove(user);
     context.Add(newUser);
     await context.SaveChangesAsync();
   }

@@ -8,7 +8,7 @@ namespace Photon.Mapping;
 
 public static partial class Mapper
 {
-  public static async Task<Role> FromDto(this RoleDto role, PhotonContext context)
+  public static async Task<Role> ToRole(this RoleDto role, PhotonContext context)
   {
     var permissions = await context.Permissions
       .Where(p => role.Permissions.Contains(p.Id))
