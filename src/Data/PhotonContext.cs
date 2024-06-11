@@ -9,7 +9,13 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
   {
     optionsBuilder
-      .UseNpgsql($"Host={config["DbConfig:Host"]}; Database={config["DbConfig:Database"]}")
+      .UseNpgsql(
+          $"""
+          User ID={config["DbConfig:UserId"]};
+          Host={config["DbConfig:Host"]}; 
+          Password={config["DbConfig:Password"]}; 
+          Database={config["DbConfig:Database"]}
+          """)
       .UseLazyLoadingProxies()
       .UseSnakeCaseNamingConvention();
   }
