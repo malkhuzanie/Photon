@@ -77,17 +77,32 @@ public class UserService(PhotonContext context) : IEntityService<User, UserDto>
   }
 
   public async Task Update(int id, UserDto _user)
-  {
-    var user = await Find(id);
+  { 
+    var user = await context.Users.Include(u => u.Facility)
+      .Include(u => u.Equipment)
+      .Include(u => u.Roles)
+      .ThenInclude(r => r.Permissions)
+      .SingleOrDefaultAsync(u => u.Id == id);
+    
     if (user == null)
     {
       throw new NotFoundException("user is not found in the database");
     }
 
-    var newUser = (await _user.ToUser(context));
-    user = newUser;
-    // context.Users.Remove(user);
-    context.Add(newUser);
+    var u = (await _user.ToUser(context));
+    
+    user.Username = u.Username;
+    user.FirstName = u.FirstName;
+    user.LastName = u.LastName;
+    user.Email = u.Email;
+    user.Password = _user.Password;
+    user.Image = u.Image;
+    user.HourlyWage = u.HourlyWage;
+    user.HireDate = u.HireDate;
+    user.Facility = u.Facility;
+    user.Equipment = u.Equipment;
+    user.Roles = u.Roles;
+    
     await context.SaveChangesAsync();
   }
 }
