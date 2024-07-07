@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Photon.Data;
 using Photon.DTOs;
 using Photon.Exceptions;
+using Photon.Extensions;
 using Photon.Interfaces;
 using Photon.Models;
 using Photon.Mapping;
@@ -17,14 +18,7 @@ public class FacilityService(PhotonContext context)
       where f.FacilityCode == code
       select f).FirstOrDefaultAsync())?.Id;
   }
-
-  public async Task<Facility?> Find(int id)
-  {
-    return await (from f in context.Facilities
-      where f.Id == id
-      select f).FirstOrDefaultAsync();
-  }
-
+  
   public async Task<Facility?> GetById(int id)
   {
     return await (from f in context.Facilities
@@ -55,15 +49,13 @@ public class FacilityService(PhotonContext context)
 
   public async Task Update(int id, FacilityDto _facility)
   {
-    var facility = await Find(id);
+    var facility = await context.Facilities.FindAsync(id);
     if (facility == null)
     {
       throw new NotFoundException("facility is not found.");
     }
 
-    var newFacility = (await _facility.ToFacility());
-    context.Facilities.Remove(facility);
-    context.Add(newFacility);
+    facility.UpdateFrom(_facility);
     await context.SaveChangesAsync();
   }
 

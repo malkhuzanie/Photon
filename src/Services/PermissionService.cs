@@ -14,14 +14,7 @@ public class PermissionService(PhotonContext context)
   {
     return await context.Permissions.ToListAsync();
   }
-
-  public async Task<Permission?> Find(int id)
-  {
-    return await (from p in context.Permissions
-      where p.Id == id
-      select p).FirstOrDefaultAsync();
-  }
-
+  
   public async Task<Permission?> GetById(int id)
   {
     return await (from p in context.Permissions

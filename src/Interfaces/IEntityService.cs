@@ -2,8 +2,6 @@ namespace Photon.Interfaces;
 
 public interface IEntityService<T, in TB>
 {
-  public Task<T?> Find(int id);
-
   public Task<T?> GetById(int id);
 
   public Task<IEnumerable<T>> GetAll();

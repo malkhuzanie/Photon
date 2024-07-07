@@ -4,6 +4,7 @@ using Photon.Data;
 using Photon.DTOs;
 using Photon.Mapping;
 using Photon.Exceptions;
+using Photon.Extensions;
 using Photon.Interfaces;
 
 namespace Photon.Services;
@@ -11,11 +12,6 @@ namespace Photon.Services;
 public class RoleService(PhotonContext context)
   : IEntityService<Role, RoleDto>
 {
-  public async Task<Role?> Find(int id)
-  {
-    return await context.Roles.FirstOrDefaultAsync(r => r.Id == id);
-  }
-
   private async Task<int?> RoleNameExists(string name)
   {
     return (await context
@@ -55,15 +51,12 @@ public class RoleService(PhotonContext context)
 
   public async Task Update(int id, RoleDto _role)
   {
-    var role = await Find(id);
+    var role = await context.Roles.FindAsync(id);
     if (role == null)
     {
       throw new NotFoundException("role is not found in the database.");
     }
-
-    var newRole = await _role.ToRole(context);
-    context.Remove(role);
-    context.Add(newRole);
+    role.UpdateFrom(await _role.ToRole(context));
     await context.SaveChangesAsync();
   }
 

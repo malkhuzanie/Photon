@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Photon.Data.Configuration;
 using Photon.Models;
 
 namespace Photon.Data;
@@ -18,6 +19,14 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
           """)
       .UseLazyLoadingProxies()
       .UseSnakeCaseNamingConvention();
+  }
+
+  protected override void OnModelCreating(ModelBuilder modelBuilder)
+  {
+    new UserEntityTypeConfiguration()
+      .Configure(modelBuilder.Entity<User>());
+    
+    base.OnModelCreating(modelBuilder);
   }
 
   public DbSet<Permission> Permissions { get; set; }
