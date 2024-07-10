@@ -4,7 +4,7 @@ using Photon.Models;
 
 namespace Photon.Mapping;
 
-public static partial class Mapper
+public static class EquipmentMapping
 {
   public static Task<Equipment> ToEquipment(this EquipmentDto equip)
   {

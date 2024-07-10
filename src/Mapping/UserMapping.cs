@@ -6,7 +6,7 @@ using Photon.Exceptions;
 
 namespace Photon.Mapping;
 
-public static partial class Mapper
+public static class UserMapping
 {
   public static async Task<User> ToUser(this UserDto user, PhotonContext context)
   {
@@ -14,7 +14,7 @@ public static partial class Mapper
     var equipment = await context.Equipments.FindAsync(user.EquipmentId);
     var roles = await context.Roles.Where(r => user.Roles.Contains(r.Id)).ToListAsync();
 
-    var validationResult = await Validate(
+    var validationResult = await Mapper.Validate(
       new ValidationArg("Facility", facility),
       new ValidationArg("Equipment", equipment),
       new ValidationArg("Roles", roles)

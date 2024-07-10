@@ -6,7 +6,7 @@ using Photon.Exceptions;
 
 namespace Photon.Mapping;
 
-public static partial class Mapper
+public static class RoleMapping
 {
   public static async Task<Role> ToRole(this RoleDto role, PhotonContext context)
   {
@@ -14,7 +14,7 @@ public static partial class Mapper
       .Where(p => role.Permissions.Contains(p.Id))
       .ToListAsync();
 
-    var validationResult = await Validate(
+    var validationResult = await Mapper.Validate(
       new ValidationArg("Permissions", permissions)
     );
 
