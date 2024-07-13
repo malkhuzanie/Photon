@@ -34,4 +34,6 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   public DbSet<Facility> Facilities { get; set; }
   public DbSet<User> Users { get; set; }
   public DbSet<Equipment> Equipments { get; set; }
+  public DbSet<Customer> Customers { get; set; }
+  public DbSet<Contact> Contacts { get; set; }
 }

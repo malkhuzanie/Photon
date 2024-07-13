@@ -23,3 +23,15 @@ public class IllegalArgumentException : HttpResponseException
   {
   }
 }
+
+public class EntityExistsException : HttpResponseException
+{
+  public EntityExistsException(int statusCode, string message, object? value = null)
+    : base(statusCode, message, value)
+  {
+  }
+  
+  public EntityExistsException(string message) : base(message)
+  {
+  }
+}

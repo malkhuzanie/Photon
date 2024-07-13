@@ -6,10 +6,12 @@ namespace Photon.Mapping;
 
 public static class CustomerMapping
 {
-  public static async Task<Customer> ToCustomer(this CustomerDto customer,
-    PhotonContext context)
+  public static async Task<Customer> ToCustomer(this CustomerDto customer)
   {
-    // return Task.Run(() => new Customer { Name = customer.Name, Contact = customer.Contact });
+    return await Task.Run(() => new Customer
+    {
+      Name = customer.Name, 
+      Contact = new Contact { PhoneNumber = customer.Contact.PhoneNumber }
+    });
   }
-  
 }
