@@ -67,5 +67,6 @@ public static class Extensions
     services.AddScoped<AuthService>();
     services.AddScoped<PermissionService>();
     services.AddScoped<EquipmentService>();
+    services.AddScoped<SupplierService>();
   }
 }

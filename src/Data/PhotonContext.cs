@@ -1,10 +1,11 @@
+using System.Runtime.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Photon.Data.Configuration;
 using Photon.Models;
 
 namespace Photon.Data;
 
-public class PhotonContext(DbContextOptions<PhotonContext> options, IConfiguration config) 
+public class PhotonContext(DbContextOptions<PhotonContext> options, IConfiguration config)
   : DbContext(options)
 {
   protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -25,6 +26,9 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   {
     new UserEntityTypeConfiguration()
       .Configure(modelBuilder.Entity<User>());
+
+    new SupplierEntityTypeConfiguration()
+      .Configure(modelBuilder.Entity<Supplier>());
     
     base.OnModelCreating(modelBuilder);
   }
@@ -36,4 +40,6 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   public DbSet<Equipment> Equipments { get; set; }
   public DbSet<Customer> Customers { get; set; }
   public DbSet<Contact> Contacts { get; set; }
+  public DbSet<Contact> Contacts { get; set; }
+  public DbSet<Supplier> Suppliers { get; set; }
 }
