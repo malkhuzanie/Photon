@@ -19,7 +19,7 @@ namespace Photon.Controllers
         public async Task<ActionResult<Supplier>> GetById(int id)
         {
             var supplier = await service.GetById(id);
-            return supplier is not null ? supplier : NotFound();
+            return supplier is not null ? Ok(supplier) : NotFound();
         }
 
         [HttpPost]

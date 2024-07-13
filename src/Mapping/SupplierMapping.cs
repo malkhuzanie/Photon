@@ -7,7 +7,7 @@ using Photon.Mapping;
 using System.Runtime.CompilerServices;
 
 namespace Photon.Mapping;
-public static partial class SupplierMapping
+public static class SupplierMapping
 {
     public static async Task<Supplier> ToSupplier(this SupplierDto supplier, PhotonContext context)
     {
@@ -17,7 +17,7 @@ public static partial class SupplierMapping
         {
             throw new IllegalArgumentException(validationResult.Msg);
         }
-
+        
         return new Supplier { Name = supplier.Name, Contact = new Contact { PhoneNumber = supplier.Contact } };
     }
 }

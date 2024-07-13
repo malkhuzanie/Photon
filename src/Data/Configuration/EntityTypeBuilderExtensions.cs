@@ -6,7 +6,7 @@ namespace Photon.Data.Configuration;
 public static class EntityTypeBuilderExtensions
 {
   public static List<PropertyBuilder> Properties<T>(this EntityTypeBuilder<T> builder,
-    Func<PropertyInfo, bool> filter = null) where T : class
+    Func<PropertyInfo, bool>? filter = null) where T : class
   {
     var props = typeof(T).GetProperties().AsEnumerable();
     if (filter != null)
