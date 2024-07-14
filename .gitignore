@@ -4,6 +4,7 @@ obj/
 docs/
 photon.http
 sql/
+
 # Ignore Visual Studio temporary files
 *.tmp
 *.temp
