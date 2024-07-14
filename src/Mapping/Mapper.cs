@@ -31,7 +31,7 @@ public static class Mapper
   {
     return await Task.Run(() =>
     {
-      return Regex.IsMatch(number, phoneNumberPatter) ? new ValidationResult(true, string.Empty) : new ValidationResult(true, "Phone Number is not valid\n");
+      return Regex.IsMatch(number, phoneNumberPatter) ? new ValidationResult(true, string.Empty) : new ValidationResult(false, "Phone Number is not valid\n");
     });
   }
 

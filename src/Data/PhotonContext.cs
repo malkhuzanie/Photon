@@ -29,7 +29,10 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
 
     new SupplierEntityTypeConfiguration()
       .Configure(modelBuilder.Entity<Supplier>());
-    
+
+    new ItemEntityTypeConfiguration()
+      .Configure(modelBuilder.Entity<Item>());
+
     base.OnModelCreating(modelBuilder);
   }
 
@@ -41,4 +44,5 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   public DbSet<Customer> Customers { get; set; }
   public DbSet<Contact> Contacts { get; set; }
   public DbSet<Supplier> Suppliers { get; set; }
+  public DbSet<Item> Items { get; set; }
 }

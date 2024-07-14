@@ -72,5 +72,6 @@ public static class Extensions
     services.AddScoped<SupplierService>();
     services.AddScoped<ContactService>();
     services.AddScoped<CustomerService>();
+    services.AddScoped<ItemService>();
   }
 }
