@@ -1,0 +1,6 @@
+.idea/
+bin/
+obj/
+docs/
+photon.http
+sql/
