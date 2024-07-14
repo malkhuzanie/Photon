@@ -60,6 +60,8 @@ public static class Extensions
     // mini-profiler
     // services.AddMiniProfiler();
 
+    services.AddCors();
+    
     services.AddNpgsql<PhotonContext>("Host=localhost; Database=wms_temp");
     services.AddScoped<FacilityService>();
     services.AddScoped<UserService>();
