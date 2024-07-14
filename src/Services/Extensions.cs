@@ -39,6 +39,8 @@ public static class Extensions
   {
     services.AddExceptionHandler<ExceptionHandler>();
 
+    services.AddCors();
+    
     services.AddControllers()
       .AddJsonOptions(options =>
       {
@@ -59,8 +61,6 @@ public static class Extensions
 
     // mini-profiler
     // services.AddMiniProfiler();
-
-    services.AddCors();
     
     services.AddNpgsql<PhotonContext>("Host=localhost; Database=wms_temp");
     services.AddScoped<FacilityService>();
