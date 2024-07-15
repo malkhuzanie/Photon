@@ -145,26 +145,22 @@ namespace Photon.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-<<<<<<< HEAD
                     b.Property<DateTime>("ExpiringDate")
-                        .HasColumnType("timestamp with time zone")
-=======
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<DateOnly>("ExpiringDate")
                         .HasColumnType("date")
->>>>>>> 0b73ac64987ebdb50adb1b5a37ec62aaabd59719
                         .HasColumnName("expiring_date");
 
                     b.Property<int>("FacilityId")
                         .HasColumnType("integer")
                         .HasColumnName("facility_id");
 
-<<<<<<< HEAD
                     b.Property<DateTime>("ManufacturerDate")
-                        .HasColumnType("timestamp with time zone")
-=======
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<DateOnly>("ManufacturerDate")
                         .HasColumnType("date")
->>>>>>> 0b73ac64987ebdb50adb1b5a37ec62aaabd59719
                         .HasColumnName("manufacturer_date");
 
                     b.Property<string>("Name")
@@ -365,7 +361,6 @@ namespace Photon.Migrations
                         .HasConstraintName("fk_permission_role_roles_roles_id");
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("Photon.Models.Customer", b =>
                 {
                     b.HasOne("Photon.Models.Contact", "Contact")
@@ -378,8 +373,6 @@ namespace Photon.Migrations
                     b.Navigation("Contact");
                 });
 
-=======
->>>>>>> 0b73ac64987ebdb50adb1b5a37ec62aaabd59719
             modelBuilder.Entity("Photon.Models.Item", b =>
                 {
                     b.HasOne("Photon.Models.Facility", "Facility")
