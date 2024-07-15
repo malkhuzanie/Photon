@@ -55,7 +55,7 @@ namespace Photon.Services
             await context.SaveChangesAsync();
         }
         // filtering the Items in a specific perios
-        public async Task<IEnumerable<Item>> GetAll(DateTime? minExpirationDate, DateTime? maxExpirationDate, string sortField, bool ascendingSort)
+        public async Task<IEnumerable<Item>> GetAll(DateOnly? minExpirationDate, DateOnly? maxExpirationDate, string sortField = "Name", bool ascendingSort = true)
         {
             IQueryable<Item> query = context.Items.Include(i => i.Facility);
 

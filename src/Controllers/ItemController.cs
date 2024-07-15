@@ -9,7 +9,7 @@ namespace Photon.Controllers
     [Route("api/[controller]")]
     public class ItemController(ItemService service) : ControllerBase
     {
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IEnumerable<Item>> GetAll()
         {
             return await service.GetAll();
@@ -26,7 +26,7 @@ namespace Photon.Controllers
         public async Task<ActionResult> Create(ItemDto itemDto)
         {
             var item = await service.Create(itemDto);
-            return CreatedAtAction(nameof(GetById), new { id = itemDto.Id }, item);
+            return CreatedAtAction(nameof(GetById), new { id = item.Id }, item);
         }
 
         [HttpPut]
@@ -48,6 +48,12 @@ namespace Photon.Controllers
                 return BadRequest("Supplier is not found in the database.");
             }
             return NoContent();
+        }
+        [HttpGet("items")]
+        public async Task<IActionResult> GetAll([FromQuery] DateOnly? minExpirationDate, [FromQuery] DateOnly? maxExpirationDate, [FromQuery] string sortField = "Name", [FromQuery] bool ascendingSort = true)
+        {
+            var items = await service.GetAll(minExpirationDate, maxExpirationDate, sortField, ascendingSort);
+            return Ok(items);
         }
     }
 }

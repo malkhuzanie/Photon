@@ -6,12 +6,13 @@ namespace Photon.Models
 
         public required string Name { get; set; }
 
-        public DateTime ManufacturerDate { get; set; }
+        public DateOnly ManufacturerDate { get; set; }
        
-        public DateTime ExpiringDate { get; set; }
+        public DateOnly ExpiringDate { get; set; }
 
         public int FacilityId { get; set; }
     
-        public required Facility Facility { get; set; }
+        public virtual required Facility Facility { get; set; }
+        
     }
 }

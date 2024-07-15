@@ -43,6 +43,7 @@ public static class Extensions
       .AddJsonOptions(options =>
       {
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower;
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
       });
 
     // Add services to the container.
