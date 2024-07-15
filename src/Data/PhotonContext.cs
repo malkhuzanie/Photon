@@ -24,6 +24,8 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
+    base.OnModelCreating(modelBuilder);
+
     new UserEntityTypeConfiguration()
       .Configure(modelBuilder.Entity<User>());
 
@@ -33,7 +35,6 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
     new ItemEntityTypeConfiguration()
       .Configure(modelBuilder.Entity<Item>());
 
-    base.OnModelCreating(modelBuilder);
   }
 
   public DbSet<Permission> Permissions { get; set; }
