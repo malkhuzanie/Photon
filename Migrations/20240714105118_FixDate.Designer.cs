@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Photon.Data;
@@ -11,9 +12,11 @@ using Photon.Data;
 namespace Photon.Migrations
 {
     [DbContext(typeof(PhotonContext))]
-    partial class PhotonContextModelSnapshot : ModelSnapshot
+    [Migration("20240714105118_FixDate")]
+    partial class FixDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -62,33 +65,6 @@ namespace Photon.Migrations
                         .HasName("pk_contacts");
 
                     b.ToTable("contacts", (string)null);
-                });
-
-            modelBuilder.Entity("Photon.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ContactId")
-                        .HasColumnType("integer")
-                        .HasColumnName("contact_id");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.HasKey("Id")
-                        .HasName("pk_customers");
-
-                    b.HasIndex("ContactId")
-                        .HasDatabaseName("ix_customers_contact_id");
-
-                    b.ToTable("customers", (string)null);
                 });
 
             modelBuilder.Entity("Photon.Models.Equipment", b =>
@@ -145,26 +121,16 @@ namespace Photon.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-<<<<<<< HEAD
-                    b.Property<DateTime>("ExpiringDate")
-                        .HasColumnType("timestamp with time zone")
-=======
                     b.Property<DateOnly>("ExpiringDate")
                         .HasColumnType("date")
->>>>>>> 0b73ac64987ebdb50adb1b5a37ec62aaabd59719
                         .HasColumnName("expiring_date");
 
                     b.Property<int>("FacilityId")
                         .HasColumnType("integer")
                         .HasColumnName("facility_id");
 
-<<<<<<< HEAD
-                    b.Property<DateTime>("ManufacturerDate")
-                        .HasColumnType("timestamp with time zone")
-=======
                     b.Property<DateOnly>("ManufacturerDate")
                         .HasColumnType("date")
->>>>>>> 0b73ac64987ebdb50adb1b5a37ec62aaabd59719
                         .HasColumnName("manufacturer_date");
 
                     b.Property<string>("Name")
@@ -365,21 +331,6 @@ namespace Photon.Migrations
                         .HasConstraintName("fk_permission_role_roles_roles_id");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("Photon.Models.Customer", b =>
-                {
-                    b.HasOne("Photon.Models.Contact", "Contact")
-                        .WithMany()
-                        .HasForeignKey("ContactId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("fk_customers_contacts_contact_id");
-
-                    b.Navigation("Contact");
-                });
-
-=======
->>>>>>> 0b73ac64987ebdb50adb1b5a37ec62aaabd59719
             modelBuilder.Entity("Photon.Models.Item", b =>
                 {
                     b.HasOne("Photon.Models.Facility", "Facility")

@@ -17,6 +17,7 @@ namespace Photon.Services
         public async Task<IEnumerable<Supplier>> GetAll()
         {
             return await context.Suppliers
+              .Include(s => s.Contact)
               .AsNoTracking()
               .ToListAsync();
         }
@@ -24,6 +25,7 @@ namespace Photon.Services
         public async Task<Supplier?> GetById(int id)
         {
             return await context.Suppliers
+              .Include(s => s.Contact)
               .AsNoTracking()
               .SingleOrDefaultAsync(s => s.Id == id);
         }
