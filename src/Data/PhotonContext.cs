@@ -24,17 +24,11 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
+    modelBuilder.ApplyConfigurationsFromAssembly(
+      typeof(PhotonContext).Assembly
+    );
+
     base.OnModelCreating(modelBuilder);
-
-    new UserEntityTypeConfiguration()
-      .Configure(modelBuilder.Entity<User>());
-
-    new SupplierEntityTypeConfiguration()
-      .Configure(modelBuilder.Entity<Supplier>());
-
-    new ItemEntityTypeConfiguration()
-      .Configure(modelBuilder.Entity<Item>());
-
   }
 
   public DbSet<Permission> Permissions { get; set; }
@@ -46,4 +40,10 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   public DbSet<Contact> Contacts { get; set; }
   public DbSet<Supplier> Suppliers { get; set; }
   public DbSet<Item> Items { get; set; }
+  public DbSet<InboundPurchaseOrderStatus> InboundPurchaseOrderStatus { get; set; }
+  public DbSet<InboundPurchaseOrder> InboundPurchaseOrders { get; set; }
+  public DbSet<InboundPurchaseOrderDetails> InboundPurchaseOrderDetails { get; set; }
+  public DbSet<OutboundPurchaseOrder> OutboundPurchaseOrders { get; set; }
+  public DbSet<OutboundPurchaseOrderStatus> OutboundPurchaseOrderStatus { get; set; }
+  public DbSet<OutboundPurchaseOrderDetails> OutboundPurchaseOrderDetails { get; set; }
 }

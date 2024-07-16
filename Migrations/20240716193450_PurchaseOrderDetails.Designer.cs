@@ -12,8 +12,8 @@ using Photon.Data;
 namespace Photon.Migrations
 {
     [DbContext(typeof(PhotonContext))]
-    [Migration("20240715110333_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20240716193450_PurchaseOrderDetails")]
+    partial class PurchaseOrderDetails
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -47,25 +47,25 @@ namespace Photon.Migrations
                     b.ToTable("permission_role", (string)null);
                 });
 
-            // modelBuilder.Entity("Photon.Models.Contact", b =>
-            //     {
-            //         b.Property<int>("Id")
-            //             .ValueGeneratedOnAdd()
-            //             .HasColumnType("integer")
-            //             .HasColumnName("id");
+            modelBuilder.Entity("Photon.Models.Contact", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
-            //         NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-            //         b.Property<string>("PhoneNumber")
-            //             .IsRequired()
-            //             .HasColumnType("text")
-            //             .HasColumnName("phone_number");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("phone_number");
 
-            //         b.HasKey("Id")
-            //             .HasName("pk_contacts");
+                    b.HasKey("Id")
+                        .HasName("pk_contacts");
 
-            //         b.ToTable("contacts", (string)null);
-            //     });
+                    b.ToTable("contacts", (string)null);
+                });
 
             modelBuilder.Entity("Photon.Models.Customer", b =>
                 {
@@ -139,6 +139,26 @@ namespace Photon.Migrations
                     b.ToTable("facilities", (string)null);
                 });
 
+            modelBuilder.Entity("Photon.Models.InboundPurchaseOrderStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_inbound_purchase_order_status");
+
+                    b.ToTable("inbound_purchase_order_status", (string)null);
+                });
+
             modelBuilder.Entity("Photon.Models.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -148,16 +168,16 @@ namespace Photon.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("ExpiringDate")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateOnly>("ExpiringDate")
+                        .HasColumnType("date")
                         .HasColumnName("expiring_date");
 
                     b.Property<int>("FacilityId")
                         .HasColumnType("integer")
                         .HasColumnName("facility_id");
 
-                    b.Property<DateTime>("ManufacturerDate")
-                        .HasColumnType("timestamp with time zone")
+                    b.Property<DateOnly>("ManufacturerDate")
+                        .HasColumnType("date")
                         .HasColumnName("manufacturer_date");
 
                     b.Property<string>("Name")
@@ -173,6 +193,26 @@ namespace Photon.Migrations
                         .HasDatabaseName("ix_items_facility_id");
 
                     b.ToTable("items", (string)null);
+                });
+
+            modelBuilder.Entity("Photon.Models.OutboundPurchaseOrderStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_outbound_purchase_order_status");
+
+                    b.ToTable("outbound_purchase_order_status", (string)null);
                 });
 
             modelBuilder.Entity("Photon.Models.Permission", b =>
@@ -193,6 +233,98 @@ namespace Photon.Migrations
                         .HasName("pk_permissions");
 
                     b.ToTable("permissions", (string)null);
+                });
+
+            modelBuilder.Entity("Photon.Models.PurchaseOrder", b =>
+                {
+                    b.Property<int>("PoNbr")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("po_nbr");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PoNbr"));
+
+                    b.Property<DateTime>("CancelDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("cancel_date");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("delivery_date");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(21)
+                        .HasColumnType("character varying(21)")
+                        .HasColumnName("discriminator");
+
+                    b.Property<int>("FacilityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("facility_id");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("order_date");
+
+                    b.Property<DateTime>("ShipDate")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("ship_date");
+
+                    b.HasKey("PoNbr")
+                        .HasName("pk_purchase_order");
+
+                    b.HasIndex("FacilityId")
+                        .HasDatabaseName("ix_purchase_order_facility_id");
+
+                    b.ToTable("purchase_order", (string)null);
+
+                    b.HasDiscriminator().HasValue("PurchaseOrder");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Photon.Models.PurchaseOrderDetails", b =>
+                {
+                    b.Property<int>("PoNbr")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("po_nbr");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PoNbr"));
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasMaxLength(34)
+                        .HasColumnType("character varying(34)")
+                        .HasColumnName("discriminator");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("integer")
+                        .HasColumnName("item_id");
+
+                    b.Property<int>("OrderedQuantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("ordered_quantity");
+
+                    b.Property<int>("ReceivedQuantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("received_quantity");
+
+                    b.Property<int>("ShippedQuantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("shipped_quantity");
+
+                    b.HasKey("PoNbr")
+                        .HasName("pk_purchase_order_details");
+
+                    b.HasIndex("ItemId")
+                        .HasDatabaseName("ix_purchase_order_details_item_id");
+
+                    b.ToTable("purchase_order_details", (string)null);
+
+                    b.HasDiscriminator().HasValue("PurchaseOrderDetails");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Photon.Models.Role", b =>
@@ -341,6 +473,76 @@ namespace Photon.Migrations
                     b.ToTable("role_user", (string)null);
                 });
 
+            modelBuilder.Entity("Photon.Models.InboundPurchaseOrder", b =>
+                {
+                    b.HasBaseType("Photon.Models.PurchaseOrder");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("integer")
+                        .HasColumnName("status_id");
+
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("integer")
+                        .HasColumnName("supplier_id");
+
+                    b.HasIndex("StatusId")
+                        .HasDatabaseName("ix_purchase_order_status_id");
+
+                    b.HasIndex("SupplierId")
+                        .HasDatabaseName("ix_purchase_order_supplier_id");
+
+                    b.HasDiscriminator().HasValue("InboundPurchaseOrder");
+                });
+
+            modelBuilder.Entity("Photon.Models.OutboundPurchaseOrder", b =>
+                {
+                    b.HasBaseType("Photon.Models.PurchaseOrder");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("integer")
+                        .HasColumnName("customer_id");
+
+                    b.Property<int>("StatusId")
+                        .HasColumnType("integer")
+                        .HasColumnName("status_id");
+
+                    b.HasIndex("CustomerId")
+                        .HasDatabaseName("ix_purchase_order_customer_id");
+
+                    b.HasIndex("StatusId")
+                        .HasDatabaseName("ix_purchase_order_status_id");
+
+                    b.HasDiscriminator().HasValue("OutboundPurchaseOrder");
+                });
+
+            modelBuilder.Entity("Photon.Models.InboundPurchaseOrderDetails", b =>
+                {
+                    b.HasBaseType("Photon.Models.PurchaseOrderDetails");
+
+                    b.Property<int>("PurchaseOrderPoNbr")
+                        .HasColumnType("integer")
+                        .HasColumnName("purchase_order_po_nbr");
+
+                    b.HasIndex("PurchaseOrderPoNbr")
+                        .HasDatabaseName("ix_purchase_order_details_purchase_order_po_nbr");
+
+                    b.HasDiscriminator().HasValue("InboundPurchaseOrderDetails");
+                });
+
+            modelBuilder.Entity("Photon.Models.OutboundPurchaseOrderDetails", b =>
+                {
+                    b.HasBaseType("Photon.Models.PurchaseOrderDetails");
+
+                    b.Property<int>("PurchaseOrderPoNbr")
+                        .HasColumnType("integer")
+                        .HasColumnName("purchase_order_po_nbr");
+
+                    b.HasIndex("PurchaseOrderPoNbr")
+                        .HasDatabaseName("ix_purchase_order_details_purchase_order_po_nbr");
+
+                    b.HasDiscriminator().HasValue("OutboundPurchaseOrderDetails");
+                });
+
             modelBuilder.Entity("PermissionRole", b =>
                 {
                     b.HasOne("Photon.Models.Permission", null)
@@ -380,6 +582,30 @@ namespace Photon.Migrations
                         .HasConstraintName("fk_items_facilities_facility_id");
 
                     b.Navigation("Facility");
+                });
+
+            modelBuilder.Entity("Photon.Models.PurchaseOrder", b =>
+                {
+                    b.HasOne("Photon.Models.Facility", "Facility")
+                        .WithMany()
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_purchase_order_facilities_facility_id");
+
+                    b.Navigation("Facility");
+                });
+
+            modelBuilder.Entity("Photon.Models.PurchaseOrderDetails", b =>
+                {
+                    b.HasOne("Photon.Models.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_purchase_order_details_items_item_id");
+
+                    b.Navigation("Item");
                 });
 
             modelBuilder.Entity("Photon.Models.Supplier", b =>
@@ -430,6 +656,72 @@ namespace Photon.Migrations
                         .HasConstraintName("fk_role_user_users_users_id");
                 });
 
+            modelBuilder.Entity("Photon.Models.InboundPurchaseOrder", b =>
+                {
+                    b.HasOne("Photon.Models.InboundPurchaseOrderStatus", "Status")
+                        .WithMany("InboundPurchaseOrders")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_purchase_order_inbound_purchase_order_status_status_id");
+
+                    b.HasOne("Photon.Models.Supplier", "Supplier")
+                        .WithMany("InBoundPurchaseOrders")
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_purchase_order_suppliers_supplier_id");
+
+                    b.Navigation("Status");
+
+                    b.Navigation("Supplier");
+                });
+
+            modelBuilder.Entity("Photon.Models.OutboundPurchaseOrder", b =>
+                {
+                    b.HasOne("Photon.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_purchase_order_customers_customer_id");
+
+                    b.HasOne("Photon.Models.OutboundPurchaseOrderStatus", "Status")
+                        .WithMany("OutboundPurchaseOrders")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_purchase_order_outbound_purchase_order_status_status_id");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Status");
+                });
+
+            modelBuilder.Entity("Photon.Models.InboundPurchaseOrderDetails", b =>
+                {
+                    b.HasOne("Photon.Models.InboundPurchaseOrder", "PurchaseOrder")
+                        .WithMany()
+                        .HasForeignKey("PurchaseOrderPoNbr")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_purchase_order_details_purchase_order_purchase_order_po_nbr");
+
+                    b.Navigation("PurchaseOrder");
+                });
+
+            modelBuilder.Entity("Photon.Models.OutboundPurchaseOrderDetails", b =>
+                {
+                    b.HasOne("Photon.Models.OutboundPurchaseOrder", "PurchaseOrder")
+                        .WithMany()
+                        .HasForeignKey("PurchaseOrderPoNbr")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_purchase_order_details_purchase_order_purchase_order_po_nbr");
+
+                    b.Navigation("PurchaseOrder");
+                });
+
             modelBuilder.Entity("Photon.Models.Equipment", b =>
                 {
                     b.Navigation("Users");
@@ -440,6 +732,21 @@ namespace Photon.Migrations
                     b.Navigation("Items");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Photon.Models.InboundPurchaseOrderStatus", b =>
+                {
+                    b.Navigation("InboundPurchaseOrders");
+                });
+
+            modelBuilder.Entity("Photon.Models.OutboundPurchaseOrderStatus", b =>
+                {
+                    b.Navigation("OutboundPurchaseOrders");
+                });
+
+            modelBuilder.Entity("Photon.Models.Supplier", b =>
+                {
+                    b.Navigation("InBoundPurchaseOrders");
                 });
 #pragma warning restore 612, 618
         }

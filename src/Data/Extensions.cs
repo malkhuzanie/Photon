@@ -8,7 +8,6 @@ public static class Extensions
     {
       var services = scope.ServiceProvider;
       var context = services.GetRequiredService<PhotonContext>();
-      context.Database.EnsureDeleted();
       context.Database.EnsureCreated();
       DbInitialiser.Initialise(context);
     }

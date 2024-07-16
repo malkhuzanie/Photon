@@ -7,7 +7,5 @@ public class PurchaseOrder
   public DateTime ShipDate { get; set; }
   public DateTime DeliveryDate { get; set; }
   public DateTime CancelDate { get; set; }
-  public required string Address;
   public virtual required Facility Facility { get; set; }
-  public virtual required Customer Customer { get; set; }
 }
