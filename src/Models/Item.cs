@@ -13,5 +13,7 @@ namespace Photon.Models
         public int FacilityId { get; set; }
     
         public virtual required Facility Facility { get; set; }
+    
+        public virtual ICollection<Material> Materials { get; set; } = [];
     }
 }
