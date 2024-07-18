@@ -42,10 +42,11 @@ namespace Photon.Services
             await context.SaveChangesAsync();
             return supplier;
         }
-
+        
         public async Task Update(int id, SupplierDto _supplier)
         {
-            var supplier = await context.Suppliers.FindAsync(id) ?? throw new NotFoundException("Supplier is not found in the database.");
+            var supplier = await context.Suppliers.FindAsync(id) ??
+               throw new NotFoundException("Supplier is not found in the database.");
             supplier.UpdateFrom(await _supplier.ToSupplier(context));
             await context.SaveChangesAsync();
         }
@@ -57,7 +58,6 @@ namespace Photon.Services
             {
                 return false;
             }
-
             context.Suppliers.Remove(supplier);
             await context.SaveChangesAsync();
             return true;
