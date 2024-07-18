@@ -46,4 +46,5 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   public DbSet<OutboundPurchaseOrder> OutboundPurchaseOrders { get; set; }
   public DbSet<OutboundPurchaseOrderStatus> OutboundPurchaseOrderStatus { get; set; }
   public DbSet<OutboundPurchaseOrderItem> OutboundPurchaseOrderDetails { get; set; }
+  public DbSet<Material> Materials { get; set; }
 }
