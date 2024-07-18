@@ -33,11 +33,6 @@ public class EquipmentController(EquipmentService service)
   [HttpPut("{id:int}")]
   public async Task<IActionResult> Update(int id, EquipmentDto _equipment)
   {
-    if (id != _equipment.Id)
-    {
-      return BadRequest("The provided ID doesn't match the ID of the new Equipment");
-    }
-
     await service.Update(id, _equipment);
     return NoContent();
   }
