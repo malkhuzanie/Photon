@@ -5,6 +5,8 @@ using Photon.Services;
 
 namespace Photon.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 public class FacilityController(FacilityService service) : ControllerBase
 {
   [HttpGet("{id:int}")]

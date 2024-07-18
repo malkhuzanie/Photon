@@ -36,10 +36,6 @@ public class RoleController(RoleService service) : ControllerBase
   [HttpPut("{id:int}")]
   public async Task<IActionResult> Update(int id, RoleDto role) 
   {
-    if (id != role.Id) 
-    {
-      return BadRequest("role id doesn't match");
-    }
     await service.Update(id, role);
     return NoContent();
   }

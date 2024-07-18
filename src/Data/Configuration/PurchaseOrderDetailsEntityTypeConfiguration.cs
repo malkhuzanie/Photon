@@ -5,9 +5,9 @@ using Photon.Models;
 namespace Photon.Data.Configuration;
 
 public class PurchaseOrderDetailsEntityTypeConfiguration 
-  : IEntityTypeConfiguration<PurchaseOrderDetails>
+  : IEntityTypeConfiguration<PurchaseOrderItem>
 {
-  public void Configure(EntityTypeBuilder<PurchaseOrderDetails> builder)
+  public void Configure(EntityTypeBuilder<PurchaseOrderItem> builder)
   {
     builder.HasKey(pod => pod.PoNbr);
   }

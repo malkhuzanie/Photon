@@ -37,10 +37,6 @@ public class CustomerController(CustomerService service)
   [HttpPut]
   public async Task<IActionResult> Update(int id, CustomerDto _customer)
   {
-    if (id != _customer.Id)
-    {
-      return BadRequest("customer's id doesn't match.");
-    }
     await service.Update(id, _customer);
     return NoContent();
   }

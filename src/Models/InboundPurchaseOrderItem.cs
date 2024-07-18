@@ -1,6 +1,6 @@
 namespace Photon.Models;
 
-public class InboundPurchaseOrderDetails : PurchaseOrderDetails
+public class InboundPurchaseOrderItem : PurchaseOrderItem
 {
   public virtual required InboundPurchaseOrder PurchaseOrder { get; set; }
 }

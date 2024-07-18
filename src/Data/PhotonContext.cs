@@ -42,8 +42,8 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   public DbSet<Item> Items { get; set; }
   public DbSet<InboundPurchaseOrderStatus> InboundPurchaseOrderStatus { get; set; }
   public DbSet<InboundPurchaseOrder> InboundPurchaseOrders { get; set; }
-  public DbSet<InboundPurchaseOrderDetails> InboundPurchaseOrderDetails { get; set; }
+  public DbSet<InboundPurchaseOrderItem> InboundPurchaseOrderDetails { get; set; }
   public DbSet<OutboundPurchaseOrder> OutboundPurchaseOrders { get; set; }
   public DbSet<OutboundPurchaseOrderStatus> OutboundPurchaseOrderStatus { get; set; }
-  public DbSet<OutboundPurchaseOrderDetails> OutboundPurchaseOrderDetails { get; set; }
+  public DbSet<OutboundPurchaseOrderItem> OutboundPurchaseOrderDetails { get; set; }
 }

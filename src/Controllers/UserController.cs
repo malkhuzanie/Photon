@@ -36,10 +36,6 @@ public class UserController(UserService service) : ControllerBase
   [HttpPut("{id:int}")]
   public async Task<IActionResult> Update(int id, UserDto _user)
   {
-    if (_user.Id != id)
-    {
-      return BadRequest("user ID doesn't match");
-    }
     await service.Update(id, _user);
     return NoContent();
   }
