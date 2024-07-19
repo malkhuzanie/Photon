@@ -24,7 +24,7 @@ public class User
   
   public virtual required Facility Facility { get; set; }
   
-  public virtual required Equipment Equipment { get; set; }
+  public virtual Equipment? Equipment { get; set; }
 
   public virtual required ICollection<Role> Roles { get; set; } = [];
 }
