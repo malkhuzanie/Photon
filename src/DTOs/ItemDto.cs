@@ -2,8 +2,7 @@ namespace Photon.DTOs
 {
     public class ItemDto
     {
-        public int? Id { get; set; }
-
+        
         public required string Name { get; set; }
 
         public DateOnly ManufacturerDate { get; set; }

@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Photon.Data;
 using Photon.Exceptions;
+using Photon.Models;
 
 namespace Photon.Services;
 
@@ -40,7 +41,7 @@ public static class Extensions
     services.AddExceptionHandler<ExceptionHandler>();
 
     services.AddCors();
-    
+
     services.AddControllers()
       .AddJsonOptions(options =>
       {
@@ -62,7 +63,7 @@ public static class Extensions
 
     // mini-profiler
     // services.AddMiniProfiler();
-    
+
     services.AddNpgsql<PhotonContext>("Host=localhost; Database=photon");
     services.AddScoped<FacilityService>();
     services.AddScoped<UserService>();
@@ -74,5 +75,6 @@ public static class Extensions
     services.AddScoped<ContactService>();
     services.AddScoped<CustomerService>();
     services.AddScoped<ItemService>();
+    services.AddScoped<MaterialService>();
   }
 }

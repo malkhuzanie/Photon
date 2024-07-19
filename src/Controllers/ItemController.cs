@@ -32,10 +32,6 @@ namespace Photon.Controllers
         [HttpPut]
         public async Task<IActionResult> Update(int id, ItemDto itemDto)
         {
-            if (id != itemDto.Id)
-            {
-                return BadRequest("Item's id doesn't match");
-            }
             await service.Update(id, itemDto);
             return NoContent();
         }

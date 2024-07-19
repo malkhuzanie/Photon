@@ -28,8 +28,8 @@ namespace Photon.Services
         public async Task<Item> Create(ItemDto _itemDto)
         {
             if (await context.RecordExists<Item>(i => i.Name == _itemDto.Name))
-                throw new IllegalArgumentException("An existing with with the same name exists");
-            if (await context.RecordExists<Facility>(f => f.Id == _itemDto.Id)!)
+                throw new EntityExistsException("An existing with with the same name exists");
+            if (!await context.RecordExists<Facility>(f => f.Id == _itemDto.FacilityId))
                 throw new IllegalArgumentException("The Facility doesn't exist");
             var item = await _itemDto.ToItem(context);
             context.Items.Add(item);
@@ -50,11 +50,12 @@ namespace Photon.Services
 
         public async Task Update(int id, ItemDto _itemDto)
         {
-            var item = await context.Items.FindAsync(id) ?? throw new NotFoundException("Item is not found in the database.");
+            var item = await context.Items.FindAsync(id) ??
+                throw new NotFoundException("Item is not found in the database.");
             item.UpdateFrom(await _itemDto.ToItem(context));
             await context.SaveChangesAsync();
         }
-        // filtering the Items in a specific perios
+        // filtering the Items in a specific periods
         public async Task<IEnumerable<Item>> GetAll(DateOnly? minExpirationDate, DateOnly? maxExpirationDate, string sortField = "Name", bool ascendingSort = true)
         {
             IQueryable<Item> query = context.Items.Include(i => i.Facility);

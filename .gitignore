@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 .idea/
 bin/
 obj/
@@ -24,7 +23,6 @@ build/
 # Ignore packages folder
 *.nuget
 *.nupkg
-=======
+
 .obj/
 .bin/
->>>>>>> 0b73ac64987ebdb50adb1b5a37ec62aaabd59719

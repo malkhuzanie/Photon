@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Photon.Data;
@@ -11,9 +12,11 @@ using Photon.Data;
 namespace Photon.Migrations
 {
     [DbContext(typeof(PhotonContext))]
-    partial class PhotonContextModelSnapshot : ModelSnapshot
+    [Migration("20240718140233_MaterialAdd")]
+    partial class MaterialAdd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -427,7 +430,7 @@ namespace Photon.Migrations
                         .HasColumnType("character varying(255)")
                         .HasColumnName("email");
 
-                    b.Property<int?>("EquipmentId")
+                    b.Property<int>("EquipmentId")
                         .HasColumnType("integer")
                         .HasColumnName("equipment_id");
 
@@ -677,6 +680,8 @@ namespace Photon.Migrations
                     b.HasOne("Photon.Models.Equipment", "Equipment")
                         .WithMany("Users")
                         .HasForeignKey("EquipmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_users_equipments_equipment_id");
 
                     b.HasOne("Photon.Models.Facility", "Facility")
