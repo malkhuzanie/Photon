@@ -5,6 +5,7 @@ using Photon.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Host.SerilogConfiguration();
 builder.Services.SetupAuthentication();
 builder.Services.RegisterServices();
 

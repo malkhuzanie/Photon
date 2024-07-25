@@ -8,6 +8,7 @@ using Photon.Exceptions;
 using Photon.Models;
 using Photon.src.Models;
 using Photon.src.Services;
+using Serilog;
 
 namespace Photon.Services;
 
@@ -38,6 +39,13 @@ public static class Extensions
       });
   }
 
+  public static void SerilogConfiguration(this IHostBuilder host)
+  {
+    host.UseSerilog((context, loggerConfig) =>
+    {
+      loggerConfig.WriteTo.Console();
+    });
+  }
   public static void RegisterServices(this IServiceCollection services)
   {
     services.AddExceptionHandler<ExceptionHandler>();
