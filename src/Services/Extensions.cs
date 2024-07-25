@@ -6,6 +6,8 @@ using Microsoft.OpenApi.Models;
 using Photon.Data;
 using Photon.Exceptions;
 using Photon.Models;
+using Photon.src.Models;
+using Photon.src.Services;
 
 namespace Photon.Services;
 
@@ -76,5 +78,6 @@ public static class Extensions
     services.AddScoped<CustomerService>();
     services.AddScoped<ItemService>();
     services.AddScoped<MaterialService>();
+    services.AddScoped<TheContainerService>();
   }
 }

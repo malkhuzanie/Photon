@@ -1,7 +1,9 @@
+using System.ComponentModel;
 using System.Runtime.Versioning;
 using Microsoft.EntityFrameworkCore;
 using Photon.Data.Configuration;
 using Photon.Models;
+using Photon.src.Models;
 
 namespace Photon.Data;
 
@@ -47,4 +49,5 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   public DbSet<OutboundPurchaseOrderStatus> OutboundPurchaseOrderStatus { get; set; }
   public DbSet<OutboundPurchaseOrderItem> OutboundPurchaseOrderDetails { get; set; }
   public DbSet<Material> Materials { get; set; }
+  public DbSet<TheContainer> TheContainers { get; set; }
 }
