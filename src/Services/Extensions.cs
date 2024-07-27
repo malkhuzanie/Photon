@@ -87,5 +87,6 @@ public static class Extensions
     services.AddScoped<ItemService>();
     services.AddScoped<MaterialService>();
     services.AddScoped<TheContainerService>();
+    services.AddScoped<ReportService>();
   }
 }

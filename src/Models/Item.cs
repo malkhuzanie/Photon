@@ -6,6 +6,8 @@ namespace Photon.Models
 
         public required string Name { get; set; }
 
+        public int Count { get; set; } = 0;
+
         public DateOnly ManufacturerDate { get; set; }
        
         public DateOnly ExpiringDate { get; set; }

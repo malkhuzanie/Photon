@@ -14,6 +14,7 @@ namespace Photon.Mapping
             return new Item
             {
                 Name = itemDto.Name,
+                Count = itemDto.Count,
                 ManufacturerDate = itemDto.ManufacturerDate,
                 ExpiringDate = itemDto.ExpiringDate,
                 FacilityId = itemDto.FacilityId,
