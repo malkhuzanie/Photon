@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Photon.DTOs;
+using Photon.DTOs.Request;
 using Photon.Models;
 using Photon.Services;
 

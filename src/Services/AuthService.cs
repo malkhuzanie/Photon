@@ -4,6 +4,8 @@ using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using Photon.DTOs;
+using Photon.DTOs.Request;
+
 namespace Photon.Services;
 
 public class AuthService(UserService service, IConfiguration config)

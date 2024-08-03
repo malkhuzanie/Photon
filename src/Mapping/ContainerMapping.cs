@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel;
-using Photon.src.DTOs;
+using Photon.DTOs.Request;
 using Photon.src.Models;
 namespace Photon.src.Mapping
 {

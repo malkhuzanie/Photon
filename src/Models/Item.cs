@@ -1,3 +1,6 @@
+using Newtonsoft.Json;
+using PO = Photon.Models.PurchaseOrder;
+
 namespace Photon.Models
 {
     public class Item
@@ -17,5 +20,9 @@ namespace Photon.Models
         public virtual required Facility Facility { get; set; }
     
         public virtual ICollection<Material> Materials { get; set; } = [];
+
+        public virtual ICollection<PO.PurchaseOrder> PurchaseOrders { get; set; } = [];
+
+        // public virtual ICollection<PO.PurchaseOrderItem> PurchaseOrderItems { get; set; }
     }
 }

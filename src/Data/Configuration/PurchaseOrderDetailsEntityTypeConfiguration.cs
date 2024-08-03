@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Photon.Models;
+using Photon.Models.PurchaseOrder;
 
 namespace Photon.Data.Configuration;
 
@@ -9,6 +10,6 @@ public class PurchaseOrderDetailsEntityTypeConfiguration
 {
   public void Configure(EntityTypeBuilder<PurchaseOrderItem> builder)
   {
-    builder.HasKey(pod => pod.PoNbr);
+    // builder.HasKey(pod => pod.PoNbr);
   }
 }

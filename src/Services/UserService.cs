@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Photon.Models;
 using Photon.Data;
 using Photon.DTOs;
+using Photon.DTOs.Request;
 using Photon.Mapping;
 using Photon.Encryption;
 using Photon.Exceptions;

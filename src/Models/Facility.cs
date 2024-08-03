@@ -12,9 +12,7 @@ public class Facility
   {
     get; set;
   } = new List<User>();
+  
   [JsonIgnore]
-  public virtual ICollection<Item> Items
-  {
-    get; set;
-  } = new List<Item>();
+  public virtual ICollection<Item> Items { get; set; } = new List<Item>();
 }

@@ -1,5 +1,6 @@
 using Photon.Data;
 using Photon.DTOs;
+using Photon.DTOs.Request;
 using Photon.Models;
 namespace Photon.Mapping;
 

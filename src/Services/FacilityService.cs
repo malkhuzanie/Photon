@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Photon.Data;
 using Photon.DTOs;
+using Photon.DTOs.Request;
 using Photon.Exceptions;
 using Photon.Extensions;
 using Photon.Interfaces;
@@ -39,7 +40,9 @@ public class FacilityService(PhotonContext context)
     var facility = await _facility.ToFacility();
     if (await FacilityCodeExists(facility.FacilityCode) != null)
     {
-      throw new IllegalArgumentException("An existing facility with the same code exists.");
+      throw new IllegalArgumentException(
+        "An existing facility with the same code exists."
+      );
     }
 
     context.Add(facility);

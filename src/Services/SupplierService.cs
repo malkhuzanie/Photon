@@ -8,6 +8,7 @@ using Photon.Extensions;
 using Photon.Interfaces;
 using System.Net.Http.Headers;
 using System.Linq.Expressions;
+using Photon.DTOs.Request;
 
 namespace Photon.Services
 {

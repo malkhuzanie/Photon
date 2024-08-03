@@ -5,6 +5,7 @@ using Photon.DTOs;
 using Photon.Exceptions;
 using Photon.Mapping;
 using System.Runtime.CompilerServices;
+using Photon.DTOs.Request;
 
 namespace Photon.Mapping;
 public static class SupplierMapping

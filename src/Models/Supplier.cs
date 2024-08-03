@@ -7,6 +7,6 @@ namespace Photon.Models
         public int Id { get; set; }
         public required string Name { get; set; }
         public virtual Contact? Contact { get; set; }
-        public virtual ICollection<InboundPurchaseOrder> InBoundPurchaseOrders { get; set; } = [];
+        // public virtual ICollection<InboundPurchaseOrder> InboundPurchaseOrders { get; set; } = [];
     }
 }

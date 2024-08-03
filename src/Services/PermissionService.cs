@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Photon.Data;
 using Photon.Models;
 using Photon.DTOs;
+using Photon.DTOs.Request;
 using Photon.Interfaces;
 using Photon.Mapping;
 

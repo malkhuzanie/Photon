@@ -11,6 +11,8 @@ public class ItemEntityTypeConfiguration : IEntityTypeConfiguration<Item>
   {
     builder.Property(i => i.Name).IsRequired();
     builder.Property(i => i.Name).HasMaxLength(255);
+    // builder.HasMany(item => item.PurchaseOrders)
+    //   .
   }
   
 }

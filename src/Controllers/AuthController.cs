@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Photon.Services;
 using Photon.DTOs;
+using Photon.DTOs.Request;
 using Photon.Http;
 
 namespace Photon.Controllers;

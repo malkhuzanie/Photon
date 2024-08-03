@@ -21,7 +21,7 @@ public static class Extensions
   // doesn't already exist
   public static async Task<EntityEntry<T>?> AddIfNotExists<T>(this DbSet<T> set, T entity,
     Expression<Func<T, bool>>? predicate = null)
-    where T : class, new()
+    where T : class
   {
     return (predicate != null && set.Any(predicate)) ? null : await set.AddAsync(entity);
   }

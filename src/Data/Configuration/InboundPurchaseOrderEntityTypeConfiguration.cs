@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Photon.Models;
+using Photon.Models.PurchaseOrder.Inbound;
 
 namespace Photon.Data.Configuration;
 

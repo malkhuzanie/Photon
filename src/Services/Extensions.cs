@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Photon.Data;
 using Photon.Exceptions;
@@ -9,6 +10,8 @@ using Photon.Models;
 using Photon.src.Models;
 using Photon.src.Services;
 using Serilog;
+using System.Reflection;
+using Photon.Interfaces;
 
 namespace Photon.Services;
 
@@ -46,6 +49,7 @@ public static class Extensions
       loggerConfig.WriteTo.Console();
     });
   }
+  
   public static void RegisterServices(this IServiceCollection services)
   {
     services.AddExceptionHandler<ExceptionHandler>();
@@ -69,11 +73,15 @@ public static class Extensions
         Type = "string",
         Format = "date"
       });
+      options.MapType<int>(() => new OpenApiSchema
+      {
+        Default = new OpenApiInteger(1)
+      });
     });
 
     // mini-profiler
     // services.AddMiniProfiler();
-
+    
     services.AddNpgsql<PhotonContext>("Host=localhost; Database=photon");
     services.AddScoped<FacilityService>();
     services.AddScoped<UserService>();
@@ -88,5 +96,7 @@ public static class Extensions
     services.AddScoped<MaterialService>();
     services.AddScoped<TheContainerService>();
     services.AddScoped<ReportService>();
+    services.AddScoped<InboundPurchaseOrderService>();
+    services.AddScoped<InboundPurchaseOrderStatusService>();
   }
 }

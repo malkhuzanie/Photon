@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Photon.Services;
 using Photon.Models;
 using Photon.DTOs;
+using Photon.DTOs.Request;
 
 namespace Photon.Controllers;
 

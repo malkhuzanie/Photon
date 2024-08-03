@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Photon.Models;
 using Photon.DTOs;
 using Photon.Data;
+using Photon.DTOs.Request;
 using Photon.Exceptions;
 
 namespace Photon.Mapping;

@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  postgres-db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+    networks:
+      - photon-network
+
+  photon:
+    image: photon
+    environment:
+       ASPNETCORE_URLS: "https://+;http://+"
+       ASPNETCORE_HTTPS_PORTS: "7086"
+       ASPNETCORE_Kestrel__Certificates__Default__Password: "password"
+       ASPNETCORE_Kestrel__Certificates__Default__Path: "/https/aspnetapp.pfx"
+       DbConfig__UserId: "postgres"
+       DbConfig__Host: "postgres-db"
+       DbConfig__Password: "admin"
+       DbConfig__Database: "photon"
+    ports:
+      - "7023:80"
+      - "7086:443"
+    volumes:
+      - ${HOME}/.aspnet/https:/https/
+    networks:
+      - photon-network
+    depends_on:
+      - postgres-db
+
+networks:
+  photon-network:
+    driver: bridge
