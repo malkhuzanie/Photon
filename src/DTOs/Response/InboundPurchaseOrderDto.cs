@@ -1,6 +1,5 @@
 using Photon.Models;
 using Photon.Models.PurchaseOrder;
-using StatusResponseDto = Photon.DTOs.Response.InboundPurchaseOrderStatusDto;
 
 namespace Photon.DTOs.Response;
 
@@ -13,6 +12,6 @@ public class InboundPurchaseOrderDto
   public DateTime CancelDate { get; set; }
   public Facility Facility { get; set; }
   public Supplier Supplier { get; set; }
-  public StatusResponseDto Status { get; set; }
+  public PurchaseOrderStatusDto Status { get; set; }
   public ICollection<PurchaseOrderItem> Items { get; set; } 
 }

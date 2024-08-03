@@ -1,6 +1,6 @@
 namespace Photon.DTOs.Request;
 
-public class InboundPurchaseOrderItemDto
+public class PurchaseOrderItemDto
 {
   public int ItemId { get; set; }
   public int OrderedQuantity { get; set; }

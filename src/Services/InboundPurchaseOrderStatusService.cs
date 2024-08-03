@@ -1,35 +1,34 @@
 using Microsoft.EntityFrameworkCore;
 using Photon.Data;
+using Photon.DTOs.Request;
 using Photon.Interfaces;
 using Photon.Models;
 
-using StatusRequestDto = Photon.DTOs.Request.InboundPurchaseOrderStatusDto;
-using StatusResponseDto = Photon.DTOs.Response.InboundPurchaseOrderStatusDto;
 namespace Photon.Services;
 
 public class InboundPurchaseOrderStatusService(PhotonContext context)
-  : IEntityService<StatusResponseDto, StatusRequestDto>
+  : IEntityService<DTOs.Response.PurchaseOrderStatusDto, PurchaseOrderStatusDto>
 {
-  public async Task<StatusResponseDto?> GetById(int id)
+  public async Task<DTOs.Response.PurchaseOrderStatusDto?> GetById(int id)
   {
     return await context.InboundPurchaseOrderStatus
-      .Select(s => new StatusResponseDto { Id = s.Id, Status = s.Status})
+      .Select(s => new DTOs.Response.PurchaseOrderStatusDto { Id = s.Id, Status = s.Status})
       .FirstOrDefaultAsync(s => s.Id == id);
   }
 
-  public async Task<IEnumerable<StatusResponseDto>> GetAll()
+  public async Task<IEnumerable<DTOs.Response.PurchaseOrderStatusDto>> GetAll()
   {
     return await context.InboundPurchaseOrderStatus
-      .Select(s => new StatusResponseDto { Id = s.Id, Status = s.Status})
+      .Select(s => new DTOs.Response.PurchaseOrderStatusDto { Id = s.Id, Status = s.Status})
       .ToListAsync();
   }
 
-  public async Task<StatusResponseDto> Create(StatusRequestDto arg)
+  public async Task<DTOs.Response.PurchaseOrderStatusDto> Create(PurchaseOrderStatusDto arg)
   {
     throw new NotImplementedException();
   }
 
-  public async Task Update(int id, StatusRequestDto arg)
+  public async Task Update(int id, PurchaseOrderStatusDto arg)
   {
     throw new NotImplementedException();
   }

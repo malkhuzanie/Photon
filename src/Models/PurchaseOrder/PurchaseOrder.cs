@@ -18,6 +18,5 @@ public class PurchaseOrder
   
   public virtual ICollection<Item> Items { get; set; } = [];
   
-  [JsonIgnore]
-  public virtual ICollection<PurchaseOrderItem> PurchaseOrderItems { get; set; } = [];
+  public virtual ICollection<PurchaseOrderItem> PoItems { get; set; } = [];
 }

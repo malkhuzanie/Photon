@@ -1,17 +1,14 @@
 using Photon.Data;
-using Photon.DTOs;
 using Photon.DTOs.Request;
 using Photon.Exceptions;
-using Photon.Models;
 using Photon.Models.PurchaseOrder;
-using Photon.Models.PurchaseOrder.Inbound;
 
 namespace Photon.Mapping;
 
-public static class InboundPurchaseOrderItemMapping
+public static class PurchaseOrderItemMapping
 {
-  public static async Task<PurchaseOrderItem> ToInboundPurchaseOrderItem(
-    this InboundPurchaseOrderItemDto poItem, PhotonContext context)
+  public static async Task<PurchaseOrderItem> ToPurchaseOrderItem(
+    this PurchaseOrderItemDto poItem, PhotonContext context)
   {
     if (await context.Items.FindAsync(poItem.ItemId) is { } item)
     {

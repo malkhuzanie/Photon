@@ -1,27 +1,24 @@
 using Photon.Data;
-using Photon.DTOs;
-using Photon.DTOs.Request;
 using Photon.Exceptions;
-using Photon.Models;
 using Photon.Models.PurchaseOrder;
-using Photon.Models.PurchaseOrder.Inbound;
+using Photon.Models.PurchaseOrder.Outbound;
 
 namespace Photon.Mapping;
 
-public static class InboundPurchaseOrderMapping
+public static class OutboundPurchaseOrderMapping
 {
-  public static async Task<InboundPurchaseOrder> ToInboundPurchaseOrder(
-      this InboundPurchaseOrderDto po, PhotonContext context)
+  public static async Task<OutboundPurchaseOrder> ToOutboundPurchaseOrder(
+      this OutboundPurchaseOrderDto po, PhotonContext context)
   {
     var facility = await context.Facilities.FindAsync(po.FacilityId);
-    var supplier = await context.Suppliers.FindAsync(po.SupplierId);
-    var status = await context.InboundPurchaseOrderStatus.FindAsync(po.StatusId);
+    var customer = await context.Customers.FindAsync(po.CustomerId);
+    var status = await context.OutboundPurchaseOrderStatus.FindAsync(po.StatusId);
 
     Console.WriteLine($"hellllp{status?.Id}");
     
     var vRes = await Mapper.Validate(
       new ValidationArg("Facility", facility),
-      new ValidationArg("Supplier", supplier),
+      new ValidationArg("Customer", customer),
       new ValidationArg("Status", status)
     );
 
@@ -36,15 +33,16 @@ public static class InboundPurchaseOrderMapping
       items.Add(await item.ToPurchaseOrderItem(context));
     }
 
-    return new InboundPurchaseOrder
+    return new OutboundPurchaseOrder
     {
       OrderDate = po.OrderDate,
       ShipDate = po.ShipDate,
       DeliveryDate = po.DeliveryDate,
       CancelDate = po.CancelDate,
-      Supplier = supplier!,
       Status = status!,
       Facility = facility!,
+      Customer = customer!,
+      Address = po.Address,
       PoItems = items
     };
   }

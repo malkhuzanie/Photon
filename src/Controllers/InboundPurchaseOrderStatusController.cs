@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Photon.DTOs.Response;
 using Photon.Models;
 using Photon.Services;
-using StatusResponseDto = Photon.DTOs.Response.InboundPurchaseOrderStatusDto;
 
 namespace Photon.Controllers;
 
@@ -11,14 +11,14 @@ public class InboundPurchaseOrderStatusController(InboundPurchaseOrderStatusServ
   : ControllerBase
 {
   [HttpGet("{id:int}")]
-  public async Task<ActionResult<StatusResponseDto>> GetById(int id)
+  public async Task<ActionResult<PurchaseOrderStatusDto>> GetById(int id)
   {
     var status = await service.GetById(id);
     return (status != null ? status : NotFound());
   }
   
   [HttpGet]
-  public async Task<IEnumerable<StatusResponseDto>> GetAll()
+  public async Task<IEnumerable<PurchaseOrderStatusDto>> GetAll()
   {
     return await service.GetAll();
   }

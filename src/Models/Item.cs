@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using PO = Photon.Models.PurchaseOrder;
 
 namespace Photon.Models
@@ -21,6 +21,7 @@ namespace Photon.Models
     
         public virtual ICollection<Material> Materials { get; set; } = [];
 
+        [JsonIgnore]
         public virtual ICollection<PO.PurchaseOrder> PurchaseOrders { get; set; } = [];
 
         // public virtual ICollection<PO.PurchaseOrderItem> PurchaseOrderItems { get; set; }

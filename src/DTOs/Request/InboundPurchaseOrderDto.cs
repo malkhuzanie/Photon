@@ -9,5 +9,5 @@ public class InboundPurchaseOrderDto
   public required int FacilityId { get; set; }
   public required int SupplierId { get; set; }
   public required int StatusId { get; set; }
-  public required List<InboundPurchaseOrderItemDto> Items { get; set; }
+  public required List<PurchaseOrderItemDto> Items { get; set; }
 }
