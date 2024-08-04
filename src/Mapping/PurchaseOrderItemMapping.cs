@@ -16,7 +16,7 @@ public static class PurchaseOrderItemMapping
       {
         ItemId = item.Id,
         OrderedQuantity = poItem.OrderedQuantity,
-        ReceivedQuantity = poItem.ReceivedQuantity
+        DeliveredQuantity = poItem.DeliveredQuantity
       };
     }
     throw new NotFoundException($"An item with Id: {poItem.ItemId}, doesn't exist");

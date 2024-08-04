@@ -1,23 +1,21 @@
 using Photon.Data;
-using Photon.DTOs;
-using Photon.DTOs.Request;
+using Photon.DTOs.Response;
 using Photon.Exceptions;
-using Photon.Models;
 using Photon.Models.PurchaseOrder;
 using Photon.Models.PurchaseOrder.Inbound;
+
+using RequestDto = Photon.DTOs.Request.InboundPurchaseOrderDto;
 
 namespace Photon.Mapping;
 
 public static class InboundPurchaseOrderMapping
 {
   public static async Task<InboundPurchaseOrder> ToInboundPurchaseOrder(
-      this InboundPurchaseOrderDto po, PhotonContext context)
+      this RequestDto po, PhotonContext context)
   {
     var facility = await context.Facilities.FindAsync(po.FacilityId);
     var supplier = await context.Suppliers.FindAsync(po.SupplierId);
     var status = await context.InboundPurchaseOrderStatus.FindAsync(po.StatusId);
-
-    Console.WriteLine($"hellllp{status?.Id}");
     
     var vRes = await Mapper.Validate(
       new ValidationArg("Facility", facility),
@@ -46,6 +44,30 @@ public static class InboundPurchaseOrderMapping
       Status = status!,
       Facility = facility!,
       PoItems = items
+    };
+  }
+
+  public static InboundPurchaseOrderResponseDto ToInboundPurchaseOrderResponseDto(
+    this InboundPurchaseOrder po)
+  {
+    return new InboundPurchaseOrderResponseDto
+    {
+      PoNbr = po.PoNbr,
+      OrderDate = po.OrderDate,
+      ShipDate = po.ShipDate,
+      DeliveryDate = po.DeliveryDate,
+      CancelDate = po.CancelDate,
+      Supplier = po.Supplier,
+      Status = po.Status,
+      Facility = po.Facility!,
+      Items = po.PoItems.Select(item => new PurchaseOrderItemResponseDto
+      {
+        Id = item.ItemId,
+        Name = item.Item?.Name,
+        OrderedQuantity = item.OrderedQuantity,
+        ShippedQuantity = item.DeliveredQuantity,
+        DeliveredQuantity = item.DeliveredQuantity
+      })
     };
   }
 }

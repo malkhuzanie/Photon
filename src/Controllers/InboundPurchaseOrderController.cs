@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Photon.DTOs;
 using Photon.DTOs.Request;
+using Photon.DTOs.Response;
 using Photon.Exceptions;
+using Photon.Mapping;
 using Photon.Models;
 using Photon.Models.PurchaseOrder.Inbound;
 using Photon.Services;
@@ -14,20 +16,21 @@ public class InboundPurchaseOrderController(InboundPurchaseOrderService service)
   : ControllerBase
 {
   [HttpGet("{poNbr:int}")]
-  public async Task<ActionResult<InboundPurchaseOrder>> GetById(int poNbr)
+  public async Task<ActionResult<InboundPurchaseOrderResponseDto>> GetById(int poNbr)
   {
     var po = await service.GetById(poNbr);
-    return (po != null ? po : NotFound());
+    return (po != null ? po.ToInboundPurchaseOrderResponseDto() : NotFound());
   }
 
   [HttpGet]
-  public async Task<IEnumerable<InboundPurchaseOrder>> GetAll()
+  public async Task<IEnumerable<InboundPurchaseOrderResponseDto>> GetAll()
   {
-    return await service.GetAll();
+    return (await service.GetAll()).Select(po => po.ToInboundPurchaseOrderResponseDto());
   }
   
   [HttpPost]
-  public async Task<ActionResult<InboundPurchaseOrder>> Create(InboundPurchaseOrderDto _ibpo)
+  public async Task<ActionResult<InboundPurchaseOrderResponseDto>> Create(
+    InboundPurchaseOrderDto _ibpo)
   {
     var ibpo = await service.Create(_ibpo);
     return CreatedAtAction(
@@ -44,6 +47,13 @@ public class InboundPurchaseOrderController(InboundPurchaseOrderService service)
     {
       throw new NotFoundException("Purchase order is not found");
     }
+    return NoContent();
+  }
+
+  [HttpPut("{poNbr:int}")]
+  public async Task<ActionResult> Update(int poNbr, InboundPurchaseOrderDto _po)
+  {
+    await service.Update(poNbr, _po);
     return NoContent();
   }
 }

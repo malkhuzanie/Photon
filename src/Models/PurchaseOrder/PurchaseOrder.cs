@@ -16,6 +16,7 @@ public class PurchaseOrder
   
   public virtual Facility? Facility { get; set; }
   
+  [JsonIgnore]
   public virtual ICollection<Item> Items { get; set; } = [];
   
   public virtual ICollection<PurchaseOrderItem> PoItems { get; set; } = [];

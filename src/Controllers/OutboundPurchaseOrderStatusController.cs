@@ -6,8 +6,8 @@ using Photon.Services;
 namespace Photon.Controllers;
 
 [ApiController]
-[Route("api/po/ib_po_status")]
-public class InboundPurchaseOrderStatusController(InboundPurchaseOrderStatusService service) 
+[Route("api/po/in_po_status")]
+public class OutboundPurchaseOrderStatusController(OutboundPurchaseOrderStatusService service) 
   : ControllerBase
 {
   [HttpGet("{id:int}")]

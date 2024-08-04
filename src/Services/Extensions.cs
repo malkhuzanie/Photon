@@ -98,5 +98,7 @@ public static class Extensions
     services.AddScoped<ReportService>();
     services.AddScoped<InboundPurchaseOrderService>();
     services.AddScoped<InboundPurchaseOrderStatusService>();
+    services.AddScoped<OutboundPurchaseOrderService>();
+    services.AddScoped<OutboundPurchaseOrderStatusService>();
   }
 }

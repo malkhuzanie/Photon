@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Photon.Data;
 using Photon.DTOs.Request;
+using Photon.Exceptions;
+using Photon.Extensions;
 using Photon.Interfaces;
 using Photon.Mapping;
-using Photon.Models;
 using Photon.Models.PurchaseOrder.Inbound;
 
 namespace Photon.Services;
@@ -39,9 +40,15 @@ public class InboundPurchaseOrderService(PhotonContext context)
     return ibpo;
   }
 
-  public async Task Update(int id, InboundPurchaseOrderDto arg)
+  public async Task Update(int poNbr, InboundPurchaseOrderDto _po)
   {
-    throw new NotImplementedException();
+    var po = await GetById(poNbr);
+    if (po == null)
+    {
+      throw new NotFoundException("Purchase order is not found in the database");
+    }
+    po.UpdateFrom(await _po.ToInboundPurchaseOrder(context));
+    await context.SaveChangesAsync();
   }
 
   public async Task<bool> Delete(int poNbr)

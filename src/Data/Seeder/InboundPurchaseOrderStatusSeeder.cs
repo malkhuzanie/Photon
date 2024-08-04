@@ -12,7 +12,7 @@ public class InboundPurchaseOrderStatusSeeder(PhotonContext context)
       .AddRangeIfNotExists(
         (s) => s.Status,
         new InboundPurchaseOrderStatus { Status = "Ordered" },
-        new InboundPurchaseOrderStatus { Status = "Received" },
+        new InboundPurchaseOrderStatus { Status = "Delivered" },
         new InboundPurchaseOrderStatus { Status = "Canceled" }
       );
   }

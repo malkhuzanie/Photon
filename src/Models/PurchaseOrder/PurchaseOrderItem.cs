@@ -6,7 +6,7 @@ public class PurchaseOrderItem
   public int PoNbr { get; set; }
   public int OrderedQuantity { get; set; }
   public int ShippedQuantity { get; set; }
-  public int ReceivedQuantity { get; set; }
-  // public virtual Item? Item { get; set; }
+  public int DeliveredQuantity { get; set; }
+  public virtual Item? Item { get; set; }
   public virtual PurchaseOrder? PurchaseOrder { get; set; }
 }
