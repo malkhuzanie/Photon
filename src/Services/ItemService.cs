@@ -18,12 +18,12 @@ namespace Photon.Services
     {
         public async Task<IEnumerable<Item>> GetAll()
         {
-            return await context.Items.Include(i => i.Facility).AsNoTracking().ToListAsync();
+            return await context.Items.Include(i => i.Facility).Include(i => i.ItemMaster).AsNoTracking().ToListAsync();
         }
 
         public async Task<Item?> GetById(int id)
         {
-            return await context.Items.Include(i => i.Facility).AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+            return await context.Items.Include(i => i.Facility).Include(i => i.ItemMaster).AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task<Item> Create(ItemDto _itemDto)

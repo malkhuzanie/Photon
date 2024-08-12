@@ -12,6 +12,7 @@ public static class ItemExtension
     item.ExpiringDate = newItem.ExpiringDate;
     item.FacilityId = newItem.FacilityId;
     item.Facility = newItem.Facility;
+    item.ItemMaster = newItem.ItemMaster;
     modify?.Invoke(item);
   }
 }

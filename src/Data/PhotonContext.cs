@@ -47,6 +47,9 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   public DbSet<Contact> Contacts { get; set; }
   public DbSet<Supplier> Suppliers { get; set; }
   public DbSet<Item> Items { get; set; }
+  public DbSet<ItemMaster> ItemMasters { get; set; }
+  public DbSet<Company> Companies { get; set; }
+  public DbSet<PutawayType> PutawayTypes { get; set; }
   public DbSet<InboundPurchaseOrderStatus> InboundPurchaseOrderStatus { get; set; }
   public DbSet<InboundPurchaseOrder> InboundPurchaseOrders { get; set; }
   // public DbSet<InboundPurchaseOrderItem> InboundPurchaseOrderItems { get; set; }

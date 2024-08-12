@@ -12,6 +12,7 @@ namespace Photon.Mapping
         public static async Task<Item> ToItem(this ItemDto itemDto, PhotonContext context)
         {
             var facility = await context.Facilities.FindAsync(itemDto.FacilityId);
+            var itemMaster = await context.ItemMasters.FindAsync(itemDto.ItemMasterId);
             return new Item
             {
                 Name = itemDto.Name,
@@ -19,7 +20,9 @@ namespace Photon.Mapping
                 ManufacturerDate = itemDto.ManufacturerDate,
                 ExpiringDate = itemDto.ExpiringDate,
                 FacilityId = itemDto.FacilityId,
-                Facility = facility!
+                Facility = facility!,
+                ItemMaster = itemMaster
+                
             };
         }
     }

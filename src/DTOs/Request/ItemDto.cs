@@ -12,5 +12,7 @@ namespace Photon.DTOs.Request
         public DateOnly ExpiringDate { get; set; }
 
         public int FacilityId { get; set; }
+
+        public int ItemMasterId { get; set; }
     }
 }

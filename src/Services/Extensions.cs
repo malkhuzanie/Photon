@@ -12,6 +12,7 @@ using Photon.src.Services;
 using Serilog;
 using System.Reflection;
 using Photon.Interfaces;
+using Photon.srs.Services;
 
 namespace Photon.Services;
 
@@ -93,6 +94,7 @@ public static class Extensions
     services.AddScoped<ContactService>();
     services.AddScoped<CustomerService>();
     services.AddScoped<ItemService>();
+    services.AddScoped<ItemMasterService>();
     services.AddScoped<MaterialService>();
     services.AddScoped<TheContainerService>();
     services.AddScoped<ReportService>();
