@@ -14,13 +14,13 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
 // {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseSwagger();
+app.UseSwaggerUI();
 // }
 
 app.CreateDbIfNotExists();
 app.UseHttpsRedirection();
-app.UseExceptionHandler(_ => {});
+app.UseExceptionHandler(_ => { });
 
 // app.UseAuthentication();
 // app.UseAuthorization();

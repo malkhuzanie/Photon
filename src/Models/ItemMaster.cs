@@ -18,7 +18,7 @@ namespace Photon.src.Models
         public decimal ItemPricing { get; set; }
         public decimal ShippingCost { get; set; }
         public int PutawayTypeId { get; set; }
-
+ 
         public virtual Company? Company { get; set; }
         public virtual Facility? Facility { get; set; }
         public virtual PutawayType? PutawayType { get; set; }

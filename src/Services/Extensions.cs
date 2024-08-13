@@ -95,6 +95,8 @@ public static class Extensions
     services.AddScoped<CustomerService>();
     services.AddScoped<ItemService>();
     services.AddScoped<ItemMasterService>();
+    services.AddScoped<CompanyService>();
+    services.AddScoped<PutawayTypeService>();
     services.AddScoped<MaterialService>();
     services.AddScoped<TheContainerService>();
     services.AddScoped<ReportService>();
