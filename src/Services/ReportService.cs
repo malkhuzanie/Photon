@@ -9,14 +9,21 @@ using QuestPDF.Infrastructure;
 
 namespace Photon.Services
 {
-    public class ReportService(PhotonContext context)
+    public class ReportService
     {
+        private readonly PhotonContext _context;
+
+        public ReportService(PhotonContext context)
+        {
+            _context = context;
+        }
+
         public async Task<(MemoryStream, string)> GetItemsByFacilityId(int id)
         {
-            var facility = await context.Facilities.AsNoTracking().SingleOrDefaultAsync(f => f.Id == id)
+            var facility = await _context.Facilities.AsNoTracking().SingleOrDefaultAsync(f => f.Id == id)
                           ?? throw new IllegalArgumentException("The facility doesn't exist");
 
-            var items = await context.Items
+            var items = await _context.Items
                 .Where(i => i.FacilityId == id)
                 .Select(i => new ItemReportDto
                 {
@@ -31,6 +38,31 @@ namespace Photon.Services
             var pdfStream = await ReportServiceUtils.GeneratePdfReportItemsByFacility(facility.FacilityCode, items);
 
             return (pdfStream, $"Items_{facility.FacilityCode}.pdf");
+        }
+
+        public async Task<(MemoryStream, string)> GetUsersByFacilityId(int facilityId)
+        {
+            var facility = await _context.Facilities.AsNoTracking().SingleOrDefaultAsync(f => f.Id == facilityId)
+                          ?? throw new IllegalArgumentException("The facility doesn't exist");
+
+            var users = await _context.Users
+                .Where(u => u.Facility.Id == facilityId)
+                .Select(u => new UserReportDto
+                {
+                    Id = u.Id,
+                    Username = u.Username,
+                    FirstName = u.FirstName,
+                    LastName = u.LastName,
+                    Email = u.Email,
+                    HourlyWage = u.HourlyWage,
+                    HireDate = u.HireDate,
+                    Roles = u.Roles.Select(r => r.Name).ToList()
+                })
+                .ToListAsync();
+
+            var pdfStream = await ReportServiceUtils.GeneratePdfReportUsersByFacility(facility.FacilityCode, users);
+
+            return (pdfStream, $"Users_{facility.FacilityCode}.pdf");
         }
     }
 }
