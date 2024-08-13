@@ -1,6 +1,10 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Photon.Data;
+using Photon.DTOs;
+using QuestPDF.Helpers;
+using QuestPDF.Fluent;
+using QuestPDF.Infrastructure;
 namespace Photon.Services
 {
     public static class DataServiceUtils

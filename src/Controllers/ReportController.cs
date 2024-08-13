@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using Photon.Models;
 using Microsoft.AspNetCore.Mvc;
-using SelectPdf;
 using Microsoft.EntityFrameworkCore;
 using Photon.Data;
 using System.Text;

@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\fael\\Desktop\\Photon\\Photon\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{8D881D82-08DC-45B6-A5CE-A02720D4953E}|Photon.csproj|c:\\users\\fael\\desktop\\photon\\photon\\src\\controllers\\itemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{8D881D82-08DC-45B6-A5CE-A02720D4953E}|Photon.csproj|solutionrelative:src\\controllers\\itemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{8D881D82-08DC-45B6-A5CE-A02720D4953E}|Photon.csproj|c:\\users\\fael\\desktop\\photon\\photon\\src\\services\\reportserviceuitils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D881D82-08DC-45B6-A5CE-A02720D4953E}|Photon.csproj|solutionrelative:src\\services\\reportserviceuitils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D881D82-08DC-45B6-A5CE-A02720D4953E}|Photon.csproj|c:\\users\\fael\\desktop\\photon\\photon\\src\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D881D82-08DC-45B6-A5CE-A02720D4953E}|Photon.csproj|solutionrelative:src\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{8D881D82-08DC-45B6-A5CE-A02720D4953E}|Photon.csproj|c:\\users\\fael\\desktop\\photon\\photon\\photon.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{8D881D82-08DC-45B6-A5CE-A02720D4953E}|Photon.csproj|solutionrelative:photon.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{8D881D82-08DC-45B6-A5CE-A02720D4953E}|Photon.csproj|c:\\users\\fael\\desktop\\photon\\photon\\src\\controllers\\itemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{8D881D82-08DC-45B6-A5CE-A02720D4953E}|Photon.csproj|solutionrelative:src\\controllers\\itemcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\fael\\.nuget\\packages\\select.pdf.netcore\\24.1.0\\readme.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
@@ -24,11 +32,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UserService.cs",
+              "DocumentMoniker": "C:\\Users\\fael\\Desktop\\Photon\\Photon\\src\\Services\\UserService.cs",
+              "RelativeDocumentMoniker": "src\\Services\\UserService.cs",
+              "ToolTip": "C:\\Users\\fael\\Desktop\\Photon\\Photon\\src\\Services\\UserService.cs",
+              "RelativeToolTip": "src\\Services\\UserService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-13T12:14:35.251Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "ReportServiceUitils.cs",
+              "DocumentMoniker": "C:\\Users\\fael\\Desktop\\Photon\\Photon\\src\\Services\\ReportServiceUitils.cs",
+              "RelativeDocumentMoniker": "src\\Services\\ReportServiceUitils.cs",
+              "ToolTip": "C:\\Users\\fael\\Desktop\\Photon\\Photon\\src\\Services\\ReportServiceUitils.cs",
+              "RelativeToolTip": "src\\Services\\ReportServiceUitils.cs",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAAoAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-13T12:11:52.37Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "ItemController.cs",
               "DocumentMoniker": "C:\\Users\\fael\\Desktop\\Photon\\Photon\\src\\Controllers\\ItemController.cs",
               "RelativeDocumentMoniker": "src\\Controllers\\ItemController.cs",
@@ -41,7 +75,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "readme.txt",
               "DocumentMoniker": "C:\\Users\\fael\\.nuget\\packages\\select.pdf.netcore\\24.1.0\\readme.txt",
               "RelativeDocumentMoniker": "..\\..\\..\\.nuget\\packages\\select.pdf.netcore\\24.1.0\\readme.txt",
@@ -54,7 +88,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "readme.txt",
               "DocumentMoniker": "C:\\Users\\fael\\.nuget\\packages\\select.pdf\\24.1.0\\readme.txt",
               "RelativeDocumentMoniker": "..\\..\\..\\.nuget\\packages\\select.pdf\\24.1.0\\readme.txt",
@@ -67,8 +101,8 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Photon",
+              "DocumentIndex": 2,
+              "Title": "Photon.csproj",
               "DocumentMoniker": "C:\\Users\\fael\\Desktop\\Photon\\Photon\\Photon.csproj",
               "RelativeDocumentMoniker": "Photon.csproj",
               "ToolTip": "C:\\Users\\fael\\Desktop\\Photon\\Photon\\Photon.csproj",
