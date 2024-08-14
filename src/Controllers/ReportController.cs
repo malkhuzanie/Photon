@@ -16,7 +16,7 @@ namespace Photon.Controllers
     [Route("[controller]")]
     public class ReportController(ReportService service) : ControllerBase
     {
-        [HttpGet("{facilityId:int}/items")]
+        [HttpGet("Items_By_Facility/Pdf/{facilityId:int}")]
         public async Task<IActionResult> GetItemsPdf(int facilityId)
         {
             try
@@ -30,7 +30,7 @@ namespace Photon.Controllers
             }
         }
 
-        [HttpGet("{facilityId:int}/users")]
+        [HttpGet("Users_By_Facility/Pdf/{facilityId:int}")]
         public async Task<IActionResult> GetUsersPdf(int facilityId)
         {
             try
@@ -43,5 +43,35 @@ namespace Photon.Controllers
                 return BadRequest(new { Message = ex.Message });
             }
         }
+
+        [HttpGet("Items_By_Facility/Excel/{facilityId:int}")]
+        public async Task<IActionResult> GetItemsExcel(int facilityId)
+        {
+            try
+            {
+                var (excelStream, fileName) = await service.GetItemsByFacilityExcel(facilityId);
+                return File(excelStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+        [HttpGet("Users_By_Facility/Excel/{facilityId:int}")]
+        public async Task<IActionResult> GetUsersExcel(int facilityId)
+        {
+            try
+            {
+                var (excelStream, fileName) = await service.GetUsersByFacilityExcel(facilityId);
+                return File(excelStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
+
+
     }
 }

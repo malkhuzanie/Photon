@@ -3,6 +3,7 @@ using Photon.DTOs;
 using QuestPDF.Helpers;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
+using ClosedXML.Excel;
 
 
 namespace Photon.Services
@@ -184,5 +185,79 @@ namespace Photon.Services
             return pdfStream;
         }
 
+        public static async Task<MemoryStream> GenerateExcelReportItemsByFacility(List<ItemReportDto> items)
+        {
+            return await Task.Run(() =>
+            {
+                var memoryStream = new MemoryStream();
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add("Items Report");
+
+                    worksheet.Cell(1, 1).Value = "ID";
+                    worksheet.Cell(1, 2).Value = "Name";
+                    worksheet.Cell(1, 3).Value = "Count";
+                    worksheet.Cell(1, 4).Value = "Manufacturer Date";
+                    worksheet.Cell(1, 5).Value = "Expiry Date";
+
+                    for (int i = 0; i < items.Count; i++)
+                    {
+                        worksheet.Cell(i + 2, 1).Value = items[i].Id;
+                        worksheet.Cell(i + 2, 2).Value = items[i].Name;
+                        worksheet.Cell(i + 2, 3).Value = items[i].Count;
+                        worksheet.Cell(i + 2, 4).Value = items[i].ManufacturerDate.ToShortDateString();
+                        worksheet.Cell(i + 2, 5).Value = items[i].ExpiringDate.ToShortDateString();
+                    }
+
+                    worksheet.Columns().AdjustToContents();
+
+                    workbook.SaveAs(memoryStream);
+                }
+
+                memoryStream.Position = 0;
+
+                return memoryStream;
+            });
+        }
+        public static async Task<MemoryStream> GenerateExcelReportUsersByFacility(List<UserReportDto> users)
+        {
+            return await Task.Run(() =>
+            {
+                var memoryStream = new MemoryStream();
+
+                using (var workbook = new XLWorkbook())
+                {
+                    var worksheet = workbook.Worksheets.Add("Users Report");
+
+                    worksheet.Cell(1, 1).Value = "ID";
+                    worksheet.Cell(1, 2).Value = "Username";
+                    worksheet.Cell(1, 3).Value = "First Name";
+                    worksheet.Cell(1, 4).Value = "Last Name";
+                    worksheet.Cell(1, 5).Value = "Email";
+                    worksheet.Cell(1, 6).Value = "Hourly Wage";
+                    worksheet.Cell(1, 7).Value = "Hire Date";
+
+                    for (int i = 0; i < users.Count; i++)
+                    {
+                        worksheet.Cell(i + 2, 1).Value = users[i].Id;
+                        worksheet.Cell(i + 2, 2).Value = users[i].Username;
+                        worksheet.Cell(i + 2, 3).Value = users[i].FirstName;
+                        worksheet.Cell(i + 2, 4).Value = users[i].LastName;
+                        worksheet.Cell(i + 2, 5).Value = users[i].Email;
+                        worksheet.Cell(i + 2, 6).Value = users[i].HourlyWage;
+                        worksheet.Cell(i + 2, 7).Value = users[i].HireDate.ToShortDateString();
+                    }
+
+                    worksheet.Columns().AdjustToContents();
+
+                    workbook.SaveAs(memoryStream);
+                }
+
+                memoryStream.Position = 0; 
+
+                return memoryStream;
+            });
+        }
     }
 }
