@@ -13,6 +13,7 @@ public static class ItemExtension
     item.FacilityId = newItem.FacilityId;
     item.Facility = newItem.Facility;
     item.ItemMaster = newItem.ItemMaster;
+    item.Materials = newItem.Materials;
     modify?.Invoke(item);
   }
 }
