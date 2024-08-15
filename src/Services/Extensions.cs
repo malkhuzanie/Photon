@@ -13,7 +13,7 @@ namespace Photon.Services;
 
 public static class Extensions
 {
-  static IConfiguration Config { get; } = new ConfigurationBuilder()
+  private static IConfiguration Config { get; } = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", true, true)
     .Build();
