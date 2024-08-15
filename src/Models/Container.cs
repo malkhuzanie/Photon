@@ -1,8 +1,6 @@
-using System;
-
 namespace Photon.src.Models
 {
-    public class TheContainer
+    public class Container
     {
         public int Id { get; set; }
 

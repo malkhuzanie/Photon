@@ -19,4 +19,25 @@ public static class UserExtension
 
     modify?.Invoke(user);
   }
+  
+  public static bool IsEmployee(this User user)
+  {
+    return user.Roles.Any(
+      r => r.Name.Equals("employee", StringComparison.CurrentCultureIgnoreCase)
+    );
+  }
+
+  public static bool IsShippingEmployee(this User user)
+  {
+    return user.Roles.Any(
+      r => r.Name.Equals("shipping", StringComparison.CurrentCultureIgnoreCase)
+    );
+  }
+  
+  public static bool IsReceivingEmployee(this User user)
+  {
+    return user.Roles.Any(
+      r => r.Name.Equals("receiving", StringComparison.CurrentCultureIgnoreCase)
+    );
+  }
 }

@@ -17,7 +17,7 @@ namespace Photon.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -236,6 +236,76 @@ namespace Photon.Migrations
                     b.ToTable("permissions", (string)null);
                 });
 
+            modelBuilder.Entity("Photon.Models.PickList", b =>
+                {
+                    b.Property<int>("PlNbr")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("pl_nbr");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PlNbr"));
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("PlNbr")
+                        .HasName("pk_pick_lists");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_pick_lists_user_id");
+
+                    b.ToTable("pick_lists", (string)null);
+                });
+
+            modelBuilder.Entity("Photon.Models.PickListItem", b =>
+                {
+                    b.Property<int>("PlNbr")
+                        .HasColumnType("integer")
+                        .HasColumnName("pl_nbr");
+
+                    b.Property<int>("PoNbr")
+                        .HasColumnType("integer")
+                        .HasColumnName("po_nbr");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("integer")
+                        .HasColumnName("item_id");
+
+                    b.Property<int?>("FromContainerId")
+                        .HasColumnType("integer")
+                        .HasColumnName("from_container_id");
+
+                    b.Property<string>("PickLocation")
+                        .HasColumnType("text")
+                        .HasColumnName("pick_location");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
+
+                    b.Property<int?>("ToContainerId")
+                        .HasColumnType("integer")
+                        .HasColumnName("to_container_id");
+
+                    b.HasKey("PlNbr", "PoNbr", "ItemId")
+                        .HasName("pk_pick_list_item");
+
+                    b.HasIndex("FromContainerId")
+                        .HasDatabaseName("ix_pick_list_item_from_container_id");
+
+                    b.HasIndex("ItemId")
+                        .HasDatabaseName("ix_pick_list_item_item_id");
+
+                    b.HasIndex("PoNbr")
+                        .HasDatabaseName("ix_pick_list_item_po_nbr");
+
+                    b.HasIndex("ToContainerId")
+                        .HasDatabaseName("ix_pick_list_item_to_container_id");
+
+                    b.ToTable("pick_list_item", (string)null);
+                });
+
             modelBuilder.Entity("Photon.Models.PurchaseOrder.Inbound.InboundPurchaseOrderStatus", b =>
                 {
                     b.Property<int>("Id")
@@ -254,6 +324,26 @@ namespace Photon.Migrations
                         .HasName("pk_inbound_purchase_order_status");
 
                     b.ToTable("inbound_purchase_order_status", (string)null);
+                });
+
+            modelBuilder.Entity("Photon.Models.PurchaseOrder.ItemPickupStatus", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_item_pickup_status");
+
+                    b.ToTable("item_pickup_status", (string)null);
                 });
 
             modelBuilder.Entity("Photon.Models.PurchaseOrder.Outbound.OutboundPurchaseOrderStatus", b =>
@@ -306,12 +396,12 @@ namespace Photon.Migrations
                         .HasColumnName("ship_date");
 
                     b.HasKey("PoNbr")
-                        .HasName("pk_purchase_order");
+                        .HasName("pk_purchase_orders");
 
                     b.HasIndex("FacilityId")
-                        .HasDatabaseName("ix_purchase_order_facility_id");
+                        .HasDatabaseName("ix_purchase_orders_facility_id");
 
-                    b.ToTable("purchase_order", (string)null);
+                    b.ToTable("purchase_orders", (string)null);
 
                     b.UseTptMappingStrategy();
                 });
@@ -330,6 +420,10 @@ namespace Photon.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("delivered_quantity");
 
+                    b.Property<int?>("ItemPickupStatusId")
+                        .HasColumnType("integer")
+                        .HasColumnName("item_pickup_status_id");
+
                     b.Property<int>("OrderedQuantity")
                         .HasColumnType("integer")
                         .HasColumnName("ordered_quantity");
@@ -343,6 +437,9 @@ namespace Photon.Migrations
 
                     b.HasIndex("ItemId")
                         .HasDatabaseName("ix_purchase_order_items_item_id");
+
+                    b.HasIndex("ItemPickupStatusId")
+                        .HasDatabaseName("ix_purchase_order_items_item_pickup_status_id");
 
                     b.ToTable("purchase_order_items", (string)null);
 
@@ -476,7 +573,7 @@ namespace Photon.Migrations
                     b.ToTable("users", (string)null);
                 });
 
-            modelBuilder.Entity("Photon.src.Models.TheContainer", b =>
+            modelBuilder.Entity("Photon.src.Models.Container", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -496,9 +593,9 @@ namespace Photon.Migrations
                         .HasColumnName("name");
 
                     b.HasKey("Id")
-                        .HasName("pk_the_containers");
+                        .HasName("pk_containers");
 
-                    b.ToTable("the_containers", (string)null);
+                    b.ToTable("containers", (string)null);
                 });
 
             modelBuilder.Entity("RoleUser", b =>
@@ -620,12 +717,68 @@ namespace Photon.Migrations
                     b.Navigation("Facility");
                 });
 
+            modelBuilder.Entity("Photon.Models.PickList", b =>
+                {
+                    b.HasOne("Photon.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_pick_lists_users_user_id");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Photon.Models.PickListItem", b =>
+                {
+                    b.HasOne("Photon.src.Models.Container", "FromContainer")
+                        .WithMany()
+                        .HasForeignKey("FromContainerId")
+                        .HasConstraintName("fk_pick_list_item_containers_from_container_id");
+
+                    b.HasOne("Photon.Models.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_pick_list_item_items_item_id");
+
+                    b.HasOne("Photon.Models.PickList", "PickList")
+                        .WithMany("Items")
+                        .HasForeignKey("PlNbr")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_pick_list_item_pick_lists_pl_nbr");
+
+                    b.HasOne("Photon.Models.PurchaseOrder.PurchaseOrder", "PurchaseOrder")
+                        .WithMany()
+                        .HasForeignKey("PoNbr")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_pick_list_item_purchase_orders_po_nbr");
+
+                    b.HasOne("Photon.src.Models.Container", "ToContainer")
+                        .WithMany()
+                        .HasForeignKey("ToContainerId")
+                        .HasConstraintName("fk_pick_list_item_containers_to_container_id");
+
+                    b.Navigation("FromContainer");
+
+                    b.Navigation("Item");
+
+                    b.Navigation("PickList");
+
+                    b.Navigation("PurchaseOrder");
+
+                    b.Navigation("ToContainer");
+                });
+
             modelBuilder.Entity("Photon.Models.PurchaseOrder.PurchaseOrder", b =>
                 {
                     b.HasOne("Photon.Models.Facility", "Facility")
                         .WithMany()
                         .HasForeignKey("FacilityId")
-                        .HasConstraintName("fk_purchase_order_facilities_facility_id");
+                        .HasConstraintName("fk_purchase_orders_facilities_facility_id");
 
                     b.Navigation("Facility");
                 });
@@ -639,14 +792,21 @@ namespace Photon.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_purchase_order_items_items_item_id");
 
+                    b.HasOne("Photon.Models.PurchaseOrder.ItemPickupStatus", "ItemPickupStatus")
+                        .WithMany()
+                        .HasForeignKey("ItemPickupStatusId")
+                        .HasConstraintName("fk_purchase_order_items_item_pickup_status_item_pickup_status_");
+
                     b.HasOne("Photon.Models.PurchaseOrder.PurchaseOrder", "PurchaseOrder")
                         .WithMany("PoItems")
                         .HasForeignKey("PoNbr")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_purchase_order_items_purchase_order_po_nbr");
+                        .HasConstraintName("fk_purchase_order_items_purchase_orders_po_nbr");
 
                     b.Navigation("Item");
+
+                    b.Navigation("ItemPickupStatus");
 
                     b.Navigation("PurchaseOrder");
                 });
@@ -704,7 +864,7 @@ namespace Photon.Migrations
                         .HasForeignKey("Photon.Models.PurchaseOrder.Inbound.InboundPurchaseOrder", "PoNbr")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_inbound_purchase_orders_purchase_order_po_nbr");
+                        .HasConstraintName("fk_inbound_purchase_orders_purchase_orders_po_nbr");
 
                     b.HasOne("Photon.Models.PurchaseOrder.Inbound.InboundPurchaseOrderStatus", "Status")
                         .WithMany("InboundPurchaseOrders")
@@ -739,7 +899,7 @@ namespace Photon.Migrations
                         .HasForeignKey("Photon.Models.PurchaseOrder.Outbound.OutboundPurchaseOrder", "PoNbr")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_outbound_purchase_orders_purchase_order_po_nbr");
+                        .HasConstraintName("fk_outbound_purchase_orders_purchase_orders_po_nbr");
 
                     b.HasOne("Photon.Models.PurchaseOrder.Outbound.OutboundPurchaseOrderStatus", "Status")
                         .WithMany("OutboundPurchaseOrders")
@@ -763,6 +923,11 @@ namespace Photon.Migrations
                     b.Navigation("Items");
 
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Photon.Models.PickList", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("Photon.Models.PurchaseOrder.Inbound.InboundPurchaseOrderStatus", b =>

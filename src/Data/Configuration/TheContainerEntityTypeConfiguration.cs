@@ -5,9 +5,9 @@ using Photon.src.Models;
 
 namespace Photon.src.Data.Configuration
 {
-    public class TheContainerEntityTypeConfiguration : IEntityTypeConfiguration<TheContainer>
+    public class TheContainerEntityTypeConfiguration : IEntityTypeConfiguration<Container>
     {
-        public void Configure(EntityTypeBuilder<TheContainer> builder)
+        public void Configure(EntityTypeBuilder<Container> builder)
         {
             builder.Property(c => c.Name).IsRequired();
             builder.Property(c => c.Model).IsRequired();

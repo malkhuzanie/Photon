@@ -1,7 +1,10 @@
+using Microsoft.EntityFrameworkCore;
 using Photon.Data;
 using Photon.DTOs.Request;
+using Photon.DTOs.Response;
 using Photon.Exceptions;
 using Photon.Models.PurchaseOrder;
+using Serilog;
 
 namespace Photon.Mapping;
 
@@ -12,13 +15,35 @@ public static class PurchaseOrderItemMapping
   {
     if (await context.Items.FindAsync(poItem.ItemId) is { } item)
     {
+      var pickupStatus = await context.ItemPickupStatus
+        .Where(s => s.Id == poItem.ItemPickupStatusId)
+        .DefaultIfEmpty(await context.ItemPickupStatus.FindAsync(1))
+        .FirstOrDefaultAsync();
+
       return new PurchaseOrderItem
       {
         ItemId = item.Id,
         OrderedQuantity = poItem.OrderedQuantity,
-        DeliveredQuantity = poItem.DeliveredQuantity
+        ShippedQuantity = poItem.ShippedQuantity,
+        DeliveredQuantity = poItem.DeliveredQuantity,
+        ItemPickupStatus = pickupStatus
       };
     }
+
     throw new NotFoundException($"An item with Id: {poItem.ItemId}, doesn't exist");
+  }
+
+  public static PurchaseOrderItemResponseDto ToPurchaseOrderItemResponseDto(
+    this PurchaseOrderItem poItem)
+  {
+    return new PurchaseOrderItemResponseDto
+    {
+      Id = poItem.ItemId,
+      Name = poItem.Item?.Name,
+      OrderedQuantity = poItem.OrderedQuantity,
+      ShippedQuantity = poItem.DeliveredQuantity,
+      DeliveredQuantity = poItem.DeliveredQuantity,
+      ItemPickupStatus = poItem.ItemPickupStatus
+    };
   }
 }

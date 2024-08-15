@@ -11,42 +11,42 @@ using Photon.src.Models;
 
 namespace Photon.src.Services
 {
-    public class TheContainerService(PhotonContext context) : IEntityService<TheContainer, TheContainerDto>
+    public class ContainerService(PhotonContext context) : IEntityService<Container, TheContainerDto>
     {
-        public async Task<TheContainer> Create(TheContainerDto theContainerDto)
+        public async Task<Container> Create(TheContainerDto theContainerDto)
         {
-            if (await context.RecordExists<TheContainer>(c => c.Name == theContainerDto.Name))
+            if (await context.RecordExists<Container>(c => c.Name == theContainerDto.Name))
                 throw new IllegalArgumentException("The Container with the same name is exists!");
 
             var theContainer = await theContainerDto.ToContainer();
-            context.TheContainers.Add(theContainer);
+            context.Containers.Add(theContainer);
             await context.SaveChangesAsync();
             return theContainer;
         }
 
         public async Task<bool> Delete(int id)
         {
-            var theContainer = await context.TheContainers.FindAsync(id);
+            var theContainer = await context.Containers.FindAsync(id);
             if (theContainer is null)
                 return false;
-            context.TheContainers.Remove(theContainer);
+            context.Containers.Remove(theContainer);
             await context.SaveChangesAsync();
             return true;
         }
 
-        public async Task<IEnumerable<TheContainer>> GetAll()
+        public async Task<IEnumerable<Container>> GetAll()
         {
-            return await context.TheContainers.AsNoTracking().ToListAsync();
+            return await context.Containers.AsNoTracking().ToListAsync();
         }
 
-        public async Task<TheContainer?> GetById(int id)
+        public async Task<Container?> GetById(int id)
         {
-            return await context.TheContainers.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id);
+            return await context.Containers.AsNoTracking().SingleOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task Update(int id, TheContainerDto theContainerDto)
         {
-            var theContainer = await context.TheContainers.FindAsync(id) ??
+            var theContainer = await context.Containers.FindAsync(id) ??
                 throw new IllegalArgumentException($"NO such Container with this {id} Id");
             theContainer.UpdateFrom(await theContainerDto.ToContainer());
             await context.SaveChangesAsync();

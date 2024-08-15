@@ -3,7 +3,7 @@ using Photon.Models.PurchaseOrder;
 
 namespace Photon.DTOs.Response;
 
-public class OutboundPurchaseOrder
+public class OutboundPurchaseOrderResponseDto
 {
   public int PoNbr { get; set; }
   public DateTime OrderDate { get; set; }

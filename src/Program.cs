@@ -1,7 +1,6 @@
-using Microsoft.AspNetCore.Server.Kestrel.Core;
-using Microsoft.IdentityModel.Logging;
 using Photon.Data;
 using Photon.Services;
+using Photon.SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,9 +21,15 @@ app.CreateDbIfNotExists();
 app.UseHttpsRedirection();
 app.UseExceptionHandler(_ => {});
 
-// app.UseAuthentication();
-// app.UseAuthorization();
+app.UseCors("AllowAll");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // app.MapControllers().RequireAuthorization();
+
 app.MapControllers();
+
+app.MapHub<NotificationHub>("/notificationHub");
+
 app.Run();

@@ -24,6 +24,6 @@ namespace Photon.Models
         [JsonIgnore]
         public virtual ICollection<PO.PurchaseOrder> PurchaseOrders { get; set; } = [];
 
-        // public virtual ICollection<PO.PurchaseOrderItem> PurchaseOrderItems { get; set; }
+        // public virtual ICollection<PO.PurchaseOrderItem> PurchaseOrderItems { get; set; } = [];
     }
 }

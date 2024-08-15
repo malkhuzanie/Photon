@@ -5,10 +5,10 @@ namespace Photon.Extensions;
 
 public static class TheContainerExtension
 {
-  public static void UpdateFrom(this TheContainer theContainer, TheContainer newtheContainer, Action<TheContainer>? modify = null)
+  public static void UpdateFrom(this Container container, Container newtheContainer, Action<Container>? modify = null)
   {
-    theContainer.Name = newtheContainer.Name;
-    theContainer.Model = newtheContainer.Model;
-    modify?.Invoke(theContainer);
+    container.Name = newtheContainer.Name;
+    container.Model = newtheContainer.Model;
+    modify?.Invoke(container);
   }
 }

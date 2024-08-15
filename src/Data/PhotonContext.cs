@@ -7,6 +7,7 @@ using Photon.Models.PurchaseOrder;
 using Photon.Models.PurchaseOrder.Inbound;
 using Photon.Models.PurchaseOrder.Outbound;
 using Photon.src.Models;
+using Container = Photon.src.Models.Container;
 
 namespace Photon.Data;
 
@@ -47,13 +48,14 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   public DbSet<Contact> Contacts { get; set; }
   public DbSet<Supplier> Suppliers { get; set; }
   public DbSet<Item> Items { get; set; }
-  public DbSet<InboundPurchaseOrderStatus> InboundPurchaseOrderStatus { get; set; }
+  public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+  public DbSet<ItemPickupStatus> ItemPickupStatus { get; set; }
   public DbSet<InboundPurchaseOrder> InboundPurchaseOrders { get; set; }
-  // public DbSet<InboundPurchaseOrderItem> InboundPurchaseOrderItems { get; set; }
+  public DbSet<InboundPurchaseOrderStatus> InboundPurchaseOrderStatus { get; set; }
   public DbSet<OutboundPurchaseOrder> OutboundPurchaseOrders { get; set; }
   public DbSet<OutboundPurchaseOrderStatus> OutboundPurchaseOrderStatus { get; set; }
-  // public DbSet<OutboundPurchaseOrderItem> OutboundPurchaseOrderItems { get; set; }
   public DbSet<Material> Materials { get; set; }
-  public DbSet<TheContainer> TheContainers { get; set; }
+  public DbSet<Container> Containers { get; set; }
   public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
+  public DbSet<PickList> PickLists { get; set; }
 }

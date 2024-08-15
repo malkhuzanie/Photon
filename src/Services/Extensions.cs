@@ -6,12 +6,8 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Photon.Data;
 using Photon.Exceptions;
-using Photon.Models;
-using Photon.src.Models;
 using Photon.src.Services;
 using Serilog;
-using System.Reflection;
-using Photon.Interfaces;
 
 namespace Photon.Services;
 
@@ -39,22 +35,45 @@ public static class Extensions
             Encoding.UTF8.GetBytes(Config["Jwt:Key"])
           )
         };
+        options.Events = new JwtBearerEvents
+        {
+          OnMessageReceived = context =>
+          {
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) &&
+                (path.StartsWithSegments("/notificationHub")))
+            {
+              context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+          }
+        };
       });
   }
 
   public static void SerilogConfiguration(this IHostBuilder host)
   {
-    host.UseSerilog((context, loggerConfig) =>
-    {
-      loggerConfig.WriteTo.Console();
-    });
+    host.UseSerilog((context, loggerConfig) => { loggerConfig.WriteTo.Console(); });
   }
-  
+
   public static void RegisterServices(this IServiceCollection services)
   {
     services.AddExceptionHandler<ExceptionHandler>();
 
-    services.AddCors();
+    services.AddCors(options =>
+    {
+      options.AddPolicy("AllowAll", builder =>
+      {
+        builder
+          .AllowAnyMethod()
+          .AllowAnyHeader()
+          .SetIsOriginAllowed(_ => true)
+          .AllowCredentials();
+      });
+    });
+
+    services.AddSignalR();
 
     services.AddControllers()
       .AddJsonOptions(options =>
@@ -63,8 +82,6 @@ public static class Extensions
         options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
       });
 
-    // Add services to the container.
-    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen(options =>
     {
@@ -79,9 +96,6 @@ public static class Extensions
       });
     });
 
-    // mini-profiler
-    // services.AddMiniProfiler();
-    
     services.AddNpgsql<PhotonContext>("Host=localhost; Database=photon");
     services.AddScoped<FacilityService>();
     services.AddScoped<UserService>();
@@ -94,11 +108,13 @@ public static class Extensions
     services.AddScoped<CustomerService>();
     services.AddScoped<ItemService>();
     services.AddScoped<MaterialService>();
-    services.AddScoped<TheContainerService>();
+    services.AddScoped<ContainerService>();
     services.AddScoped<ReportService>();
     services.AddScoped<InboundPurchaseOrderService>();
     services.AddScoped<InboundPurchaseOrderStatusService>();
     services.AddScoped<OutboundPurchaseOrderService>();
     services.AddScoped<OutboundPurchaseOrderStatusService>();
+    services.AddScoped<PickListService>();
+    services.AddScoped<PickListItemService>();
   }
 }

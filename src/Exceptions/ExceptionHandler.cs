@@ -21,4 +21,9 @@ public class ExceptionHandler(ProblemDetailsFactory problemDetailsFactory) : IEx
     );
     return true;
   }
+
+  // public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, ValidationException exception)
+  // {
+  //   
+  // }
 }

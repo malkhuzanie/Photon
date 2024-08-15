@@ -9,4 +9,5 @@ public class PurchaseOrderItem
   public int DeliveredQuantity { get; set; }
   public virtual Item? Item { get; set; }
   public virtual PurchaseOrder? PurchaseOrder { get; set; }
+  public virtual ItemPickupStatus? ItemPickupStatus { get; set; }
 }

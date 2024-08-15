@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
@@ -17,7 +18,7 @@ public class AuthService(UserService service, IConfiguration config)
       var token = new JwtSecurityToken(
         config["Jwt:Issuer"],
         config["Jwt:Audience"],
-        null,
+        new[] { new Claim(ClaimTypes.NameIdentifier, login.Username)},
         expires: DateTime.Now.AddMinutes(120),
         signingCredentials: new SigningCredentials(
           new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["Jwt:Key"])),

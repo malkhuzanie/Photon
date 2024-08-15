@@ -22,4 +22,3 @@ public record ValidationResult(bool Status, string Msg);
  * else msg holds the mapping error 
  */
 public record MappingResult<T>(string Msg, T? Result);
-

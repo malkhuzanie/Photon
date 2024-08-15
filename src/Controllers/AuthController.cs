@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Photon.Services;
 using Photon.DTOs;
@@ -9,9 +10,11 @@ namespace Photon.Controllers;
 
 [ApiController]
 [Route("api/user/")]
+[EnableCors("AllowAll")]
 public class AuthController(AuthService service) : ControllerBase
 {
   [HttpPost]
+  [HttpOptions]
   [AllowAnonymous]
   [Route("login")]
   public async Task<IActionResult> Login(UserLoginDto login)

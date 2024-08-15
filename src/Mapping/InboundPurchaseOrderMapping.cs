@@ -3,7 +3,7 @@ using Photon.DTOs.Response;
 using Photon.Exceptions;
 using Photon.Models.PurchaseOrder;
 using Photon.Models.PurchaseOrder.Inbound;
-
+using Serilog;
 using RequestDto = Photon.DTOs.Request.InboundPurchaseOrderDto;
 
 namespace Photon.Mapping;
@@ -27,13 +27,7 @@ public static class InboundPurchaseOrderMapping
     {
       throw new NotFoundException($"{vRes.Msg} doesn't exist");
     }
-
-    IList<PurchaseOrderItem> items = [];
-    foreach (var item in po.Items)
-    {
-      items.Add(await item.ToPurchaseOrderItem(context));
-    }
-
+    
     return new InboundPurchaseOrder
     {
       OrderDate = po.OrderDate,
@@ -43,7 +37,7 @@ public static class InboundPurchaseOrderMapping
       Supplier = supplier!,
       Status = status!,
       Facility = facility!,
-      PoItems = items
+      PoItems = po.Items.Select(item => item.ToPurchaseOrderItem(context).Result).ToList()
     };
   }
 
@@ -60,14 +54,7 @@ public static class InboundPurchaseOrderMapping
       Supplier = po.Supplier,
       Status = po.Status,
       Facility = po.Facility!,
-      Items = po.PoItems.Select(item => new PurchaseOrderItemResponseDto
-      {
-        Id = item.ItemId,
-        Name = item.Item?.Name,
-        OrderedQuantity = item.OrderedQuantity,
-        ShippedQuantity = item.DeliveredQuantity,
-        DeliveredQuantity = item.DeliveredQuantity
-      })
+      Items = po.PoItems.Select(item => item.ToPurchaseOrderItemResponseDto())
     };
   }
 }

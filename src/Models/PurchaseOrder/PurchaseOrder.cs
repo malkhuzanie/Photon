@@ -20,4 +20,9 @@ public class PurchaseOrder
   public virtual ICollection<Item> Items { get; set; } = [];
   
   public virtual ICollection<PurchaseOrderItem> PoItems { get; set; } = [];
+
+  public int OrderedQuantity(int itemId)
+  {
+    return PoItems.FirstOrDefault(poItem => poItem.ItemId == itemId)?.OrderedQuantity ?? 0;
+  }
 }

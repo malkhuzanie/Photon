@@ -6,12 +6,9 @@ public class Facility
   public int Id { get; init; }
   public required string FacilityCode { get; set; }
 
-  [JsonIgnore]
-  public virtual ICollection<User> Users
-  {
-    get; set;
-  } = new List<User>();
-  
-  [JsonIgnore]
-  public virtual ICollection<Item> Items { get; set; } = new List<Item>();
+  [JsonIgnore] 
+  public virtual ICollection<User> Users { get; set; } = [];
+
+  [JsonIgnore] 
+  public virtual ICollection<Item> Items { get; set; } = [];
 }

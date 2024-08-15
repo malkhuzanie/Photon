@@ -1,11 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Photon.DTOs;
 using Photon.DTOs.Request;
 using Photon.DTOs.Response;
 using Photon.Exceptions;
 using Photon.Mapping;
-using Photon.Models;
-using Photon.Models.PurchaseOrder.Inbound;
 using Photon.Services;
 
 namespace Photon.Controllers;
@@ -23,16 +20,18 @@ public class InboundPurchaseOrderController(InboundPurchaseOrderService service)
   }
 
   [HttpGet]
-  public async Task<IEnumerable<InboundPurchaseOrderResponseDto>> GetAll()
+  public async Task<IEnumerable<InboundPurchaseOrderResponseDto>> GetAll(
+    [FromQuery] DateTime? startDate, [FromQuery] DateTime? endDate)
   {
-    return (await service.GetAll()).Select(po => po.ToInboundPurchaseOrderResponseDto());
+    return (await service.GetAll(startDate, endDate))
+      .Select(po => po.ToInboundPurchaseOrderResponseDto());
   }
-  
+
   [HttpPost]
   public async Task<ActionResult<InboundPurchaseOrderResponseDto>> Create(
     InboundPurchaseOrderDto _ibpo)
   {
-    var ibpo = await service.Create(_ibpo);
+    var ibpo = (await service.Create(_ibpo)).ToInboundPurchaseOrderResponseDto();
     return CreatedAtAction(
       nameof(GetById),
       new { poNbr = ibpo.PoNbr },
@@ -47,6 +46,7 @@ public class InboundPurchaseOrderController(InboundPurchaseOrderService service)
     {
       throw new NotFoundException("Purchase order is not found");
     }
+
     return NoContent();
   }
 

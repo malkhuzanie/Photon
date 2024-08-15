@@ -7,11 +7,11 @@ using Photon.src.Services;
 namespace Photon.src.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class TheContainerController(TheContainerService service) : ControllerBase
+    [Route("api/[controller]")]
+    public class ContainerController(ContainerService service) : ControllerBase
     {
         [HttpGet]
-        public async Task<IEnumerable<TheContainer>> GetAll()
+        public async Task<IEnumerable<Container>> GetAll()
         {
             return await service.GetAll();
         }
