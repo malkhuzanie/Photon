@@ -29,19 +29,8 @@ namespace Photon.Mapping
 
             }
 
-            var facility = await context.Facilities
-                .FirstOrDefaultAsync(f => f.Id == itemMasterDto.FacilityId);
-
-            if (facility == null)
-            {
-                throw new IllegalArgumentException($"Facility with ID {itemMasterDto.FacilityId} not found.");
-            }
-
             return new ItemMaster
             {
-                ItemNbr = itemMasterDto.ItemNbr,
-                CompanyId = company.Id,
-                FacilityId = facility.Id,
                 Barcode = itemMasterDto.Barcode,
                 Description = itemMasterDto.Description,
                 PhysicalDimension = itemMasterDto.PhysicalDimension,
@@ -51,9 +40,7 @@ namespace Photon.Mapping
                 PurchaseCost = itemMasterDto.PurchaseCost,
                 ItemPricing = itemMasterDto.ItemPricing,
                 ShippingCost = itemMasterDto.ShippingCost,
-                PutawayTypeId = putawayType.Id,
                 Company = company,
-                Facility = facility,
                 PutawayType = putawayType
             };
         }

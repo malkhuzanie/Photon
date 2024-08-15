@@ -13,6 +13,5 @@ namespace Photon.DTOs.Request
 
         public int FacilityId { get; set; }
 
-        public int ItemMasterId { get; set; }
     }
 }

@@ -17,7 +17,6 @@ namespace Photon.srs.Services
         {
             return await context.ItemMasters
                 .Include(im => im.Company)
-                .Include(im => im.Facility)
                 .Include(im => im.PutawayType)
                 .AsNoTracking()
                 .ToListAsync();
@@ -27,7 +26,6 @@ namespace Photon.srs.Services
         {
             return await context.ItemMasters
                 .Include(im => im.Company)
-                .Include(im => im.Facility)
                 .Include(im => im.PutawayType)
                 .AsNoTracking()
                 .SingleOrDefaultAsync(im => im.Id == id);

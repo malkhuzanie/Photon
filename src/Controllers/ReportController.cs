@@ -16,7 +16,7 @@ namespace Photon.Controllers
     [Route("[controller]")]
     public class ReportController(ReportService service) : ControllerBase
     {
-        [HttpGet("Items_By_Facility/Pdf/{facilityId:int}")]
+        [HttpGet("facility/{facilityId:int}/items/pdf")]
         public async Task<IActionResult> GetItemsPdf(int facilityId)
         {
             try
@@ -30,7 +30,7 @@ namespace Photon.Controllers
             }
         }
 
-        [HttpGet("Users_By_Facility/Pdf/{facilityId:int}")]
+        [HttpGet("facility/{facilityId:int}/users/pdf")]
         public async Task<IActionResult> GetUsersPdf(int facilityId)
         {
             try
@@ -44,7 +44,7 @@ namespace Photon.Controllers
             }
         }
 
-        [HttpGet("Items_By_Facility/Excel/{facilityId:int}")]
+        [HttpGet("facility/{facilityId:int}/items/excel")]
         public async Task<IActionResult> GetItemsExcel(int facilityId)
         {
             try
@@ -58,7 +58,7 @@ namespace Photon.Controllers
             }
         }
 
-        [HttpGet("Users_By_Facility/Excel/{facilityId:int}")]
+        [HttpGet("facility/{facilityId:int}/users/excel")]
         public async Task<IActionResult> GetUsersExcel(int facilityId)
         {
             try

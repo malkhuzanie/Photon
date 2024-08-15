@@ -7,9 +7,6 @@ namespace Photon.srs.Extensions
     {
         public static void UpdateFrom(this ItemMaster itemMaster, ItemMaster newItemMaster, Action<ItemMaster>? modify = null)
         {
-            itemMaster.ItemNbr = newItemMaster.ItemNbr;
-            itemMaster.CompanyId = newItemMaster.CompanyId;
-            itemMaster.FacilityId = newItemMaster.FacilityId;
             itemMaster.Barcode = newItemMaster.Barcode;
             itemMaster.Description = newItemMaster.Description;
             itemMaster.PhysicalDimension = newItemMaster.PhysicalDimension;
@@ -19,7 +16,8 @@ namespace Photon.srs.Extensions
             itemMaster.PurchaseCost = newItemMaster.PurchaseCost;
             itemMaster.ItemPricing = newItemMaster.ItemPricing;
             itemMaster.ShippingCost = newItemMaster.ShippingCost;
-            itemMaster.PutawayTypeId = newItemMaster.PutawayTypeId;
+            itemMaster.Company = newItemMaster.Company;
+            itemMaster.PutawayType = newItemMaster.PutawayType;
 
             modify?.Invoke(itemMaster);
         }
