@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Photon.Data;
@@ -11,9 +12,11 @@ using Photon.Data;
 namespace Photon.Migrations
 {
     [DbContext(typeof(PhotonContext))]
-    partial class PhotonContextModelSnapshot : ModelSnapshot
+    [Migration("20240815094658_itemMasterEditMigration")]
+    partial class itemMasterEditMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -526,6 +529,10 @@ namespace Photon.Migrations
                         .HasColumnType("text")
                         .HasColumnName("description");
 
+                    b.Property<int?>("FacilityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("facility_id");
+
                     b.Property<decimal>("ItemPricing")
                         .HasColumnType("numeric")
                         .HasColumnName("item_pricing");
@@ -566,6 +573,9 @@ namespace Photon.Migrations
 
                     b.HasIndex("CompanyId")
                         .HasDatabaseName("ix_item_masters_company_id");
+
+                    b.HasIndex("FacilityId")
+                        .HasDatabaseName("ix_item_masters_facility_id");
 
                     b.HasIndex("PutawayTypeId")
                         .HasDatabaseName("ix_item_masters_putaway_type_id");
@@ -811,12 +821,19 @@ namespace Photon.Migrations
                         .HasForeignKey("CompanyId")
                         .HasConstraintName("fk_item_masters_companies_company_id");
 
+                    b.HasOne("Photon.Models.Facility", "Facility")
+                        .WithMany()
+                        .HasForeignKey("FacilityId")
+                        .HasConstraintName("fk_item_masters_facilities_facility_id");
+
                     b.HasOne("Photon.src.Models.PutawayType", "PutawayType")
                         .WithMany()
                         .HasForeignKey("PutawayTypeId")
                         .HasConstraintName("fk_item_masters_putaway_types_putaway_type_id");
 
                     b.Navigation("Company");
+
+                    b.Navigation("Facility");
 
                     b.Navigation("PutawayType");
                 });

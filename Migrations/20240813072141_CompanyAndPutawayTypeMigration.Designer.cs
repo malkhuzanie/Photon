@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Photon.Data;
@@ -11,13 +12,15 @@ using Photon.Data;
 namespace Photon.Migrations
 {
     [DbContext(typeof(PhotonContext))]
-    partial class PhotonContextModelSnapshot : ModelSnapshot
+    [Migration("20240813072141_CompanyAndPutawayTypeMigration")]
+    partial class CompanyAndPutawayTypeMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.8")
+                .HasAnnotation("ProductVersion", "8.0.7")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -517,7 +520,7 @@ namespace Photon.Migrations
                         .HasColumnType("text")
                         .HasColumnName("barcode");
 
-                    b.Property<int?>("CompanyId")
+                    b.Property<int>("CompanyId")
                         .HasColumnType("integer")
                         .HasColumnName("company_id");
 
@@ -525,6 +528,14 @@ namespace Photon.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("description");
+
+                    b.Property<int>("FacilityId")
+                        .HasColumnType("integer")
+                        .HasColumnName("facility_id");
+
+                    b.Property<int>("ItemNbr")
+                        .HasColumnType("integer")
+                        .HasColumnName("item_nbr");
 
                     b.Property<decimal>("ItemPricing")
                         .HasColumnType("numeric")
@@ -543,7 +554,7 @@ namespace Photon.Migrations
                         .HasColumnType("numeric")
                         .HasColumnName("purchase_cost");
 
-                    b.Property<int?>("PutawayTypeId")
+                    b.Property<int>("PutawayTypeId")
                         .HasColumnType("integer")
                         .HasColumnName("putaway_type_id");
 
@@ -566,6 +577,9 @@ namespace Photon.Migrations
 
                     b.HasIndex("CompanyId")
                         .HasDatabaseName("ix_item_masters_company_id");
+
+                    b.HasIndex("FacilityId")
+                        .HasDatabaseName("ix_item_masters_facility_id");
 
                     b.HasIndex("PutawayTypeId")
                         .HasDatabaseName("ix_item_masters_putaway_type_id");
@@ -809,14 +823,27 @@ namespace Photon.Migrations
                     b.HasOne("Photon.src.Models.Company", "Company")
                         .WithMany()
                         .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_item_masters_companies_company_id");
+
+                    b.HasOne("Photon.Models.Facility", "Facility")
+                        .WithMany()
+                        .HasForeignKey("FacilityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_item_masters_facilities_facility_id");
 
                     b.HasOne("Photon.src.Models.PutawayType", "PutawayType")
                         .WithMany()
                         .HasForeignKey("PutawayTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
                         .HasConstraintName("fk_item_masters_putaway_types_putaway_type_id");
 
                     b.Navigation("Company");
+
+                    b.Navigation("Facility");
 
                     b.Navigation("PutawayType");
                 });

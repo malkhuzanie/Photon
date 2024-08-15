@@ -6,8 +6,12 @@ using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Photon.Data;
 using Photon.Exceptions;
+using Photon.Models;
+using Photon.src.Models;
 using Photon.src.Services;
 using Serilog;
+using System.Reflection;
+using Photon.Interfaces;
 
 namespace Photon.Services;
 
@@ -82,6 +86,8 @@ public static class Extensions
         options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
       });
 
+    // Add services to the container.
+    // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     services.AddEndpointsApiExplorer();
     services.AddSwaggerGen(options =>
     {

@@ -4,6 +4,7 @@ using Photon.DTOs;
 using Photon.DTOs.Request;
 using Photon.Exceptions;
 using Photon.Models;
+using Photon.src.Models;
 
 namespace Photon.Mapping
 {
@@ -19,7 +20,21 @@ namespace Photon.Mapping
                 ManufacturerDate = itemDto.ManufacturerDate,
                 ExpiringDate = itemDto.ExpiringDate,
                 FacilityId = itemDto.FacilityId,
-                Facility = facility!
+                Facility = facility!,
+                ItemMaster = new ItemMaster
+                {
+                    Barcode = "DefaultBarcode",
+                    Description = "DefaultDescription",
+                    PhysicalDimension = "DefaultPhysicalDimension",
+                    TechnicalSpecification = "DefaultTechnicalSpecification",
+                    MinimumOrderSize = 0,
+                    TimeToManufacture = "01-01-0001",
+                    PurchaseCost = 0,
+                    ItemPricing = 0,
+                    ShippingCost = 0,
+                    Company = null,
+                    PutawayType = null,
+                }
             };
         }
     }

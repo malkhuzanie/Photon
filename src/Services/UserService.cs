@@ -59,7 +59,7 @@ public class UserService(PhotonContext context) : IEntityService<User, UserDto>
     await context.SaveChangesAsync();
     return user;
   }
-
+  
   public async Task<bool> Delete(int id)
   {
     if (await context.Users.FindAsync(id) is not { } user)

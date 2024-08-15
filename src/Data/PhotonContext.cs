@@ -7,7 +7,6 @@ using Photon.Models.PurchaseOrder;
 using Photon.Models.PurchaseOrder.Inbound;
 using Photon.Models.PurchaseOrder.Outbound;
 using Photon.src.Models;
-using Container = Photon.src.Models.Container;
 
 namespace Photon.Data;
 
@@ -55,7 +54,10 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   public DbSet<OutboundPurchaseOrder> OutboundPurchaseOrders { get; set; }
   public DbSet<OutboundPurchaseOrderStatus> OutboundPurchaseOrderStatus { get; set; }
   public DbSet<Material> Materials { get; set; }
-  public DbSet<Container> Containers { get; set; }
+  public DbSet<src.Models.Container> Containers { get; set; }
   public DbSet<PurchaseOrderItem> PurchaseOrderItems { get; set; }
   public DbSet<PickList> PickLists { get; set; }
+  public DbSet<PutawayType> PutawayTypes { get; set; }
+  public DbSet<Company> Companies { get; set; }
+  public DbSet<ItemMaster> ItemMasters { get; set; }
 }
