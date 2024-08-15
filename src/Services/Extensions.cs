@@ -122,5 +122,6 @@ public static class Extensions
     services.AddScoped<OutboundPurchaseOrderStatusService>();
     services.AddScoped<PickListService>();
     services.AddScoped<PickListItemService>();
+    services.AddScoped<ItemPickupStatusService>();
   }
 }

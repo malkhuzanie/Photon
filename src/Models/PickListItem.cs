@@ -16,7 +16,7 @@ public class PickListItem
   
   public int ItemId { get; set; }
   
-  public ItemPickupStatus? ItemPickupStatus { get; set; }
+  public virtual ItemPickupStatus? ItemPickupStatus { get; set; }
   
   public virtual PickList? PickList { get; set; }
   

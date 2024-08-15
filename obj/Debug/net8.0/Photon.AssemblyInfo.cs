@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Photon")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cd5c1482dbb09083ec08b802edbc91bff05e22e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+08d59365e896204b9086fdca69d942440f0683c6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Photon")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Photon")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
