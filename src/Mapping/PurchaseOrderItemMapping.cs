@@ -42,6 +42,7 @@ public static class PurchaseOrderItemMapping
       OrderedQuantity = poItem.OrderedQuantity,
       ShippedQuantity = poItem.DeliveredQuantity,
       DeliveredQuantity = poItem.DeliveredQuantity,
+      ItemPrice = poItem.ItemPrice,
       ItemPickupStatus = poItem.ItemPickupStatus
     };
   }

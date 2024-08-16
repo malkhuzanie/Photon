@@ -9,7 +9,7 @@ using Photon.Models;
 
 namespace Photon.Services;
 
-public class PickListService(PhotonContext context)
+public class PickListService(PhotonContext context, PurchaseOrderService service)
   : IEntityService<PickList, PickListDto>
 {
   public async Task<PickList?> GetById(int plNbr)
@@ -17,6 +17,7 @@ public class PickListService(PhotonContext context)
     return await context.PickLists
       .Include(pl => pl.User)
       .Include(pl => pl.Items)
+      .ThenInclude(item => item.ItemPickupStatus)
       .FirstOrDefaultAsync(pl => pl.PlNbr == plNbr);
   }
 
@@ -62,9 +63,16 @@ public class PickListService(PhotonContext context)
     return pickList;
   }
 
-  public Task Update(int id, PickListDto arg)
+  public async Task Update(int plNbr, PickListDto pickList)
   {
-    throw new NotImplementedException();
+    var pl = await GetById(plNbr);
+    if (pl == null)
+    {
+      throw new NotFoundException(
+        $"Update cannot be done, the pick list with id: {plNbr}, doesn't exists"
+      );
+    }
+    pl.UpdateFrom(await pickList.ToPickList(context));
   }
 
   public async Task<bool> Delete(int plNbr)

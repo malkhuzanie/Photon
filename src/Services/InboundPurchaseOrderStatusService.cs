@@ -1,14 +1,22 @@
 using Microsoft.EntityFrameworkCore;
 using Photon.Data;
 using Photon.DTOs.Request;
+using Photon.DTOs.Response;
 using Photon.Interfaces;
 using Photon.Models;
+using Photon.Models.PurchaseOrder;
 
 namespace Photon.Services;
 
 public class InboundPurchaseOrderStatusService(PhotonContext context)
   : IEntityService<DTOs.Response.PurchaseOrderStatusResponseDto, PurchaseOrderStatusDto>
 {
+  public async Task<PurchaseOrderStatus> Cancelled()
+  {
+    return await context.InboundPurchaseOrderStatus
+      .FirstAsync(s => s.Status.Equals("cancelled", StringComparison.CurrentCultureIgnoreCase));
+  }
+  
   public async Task<DTOs.Response.PurchaseOrderStatusResponseDto?> GetById(int id)
   {
     return await context.InboundPurchaseOrderStatus

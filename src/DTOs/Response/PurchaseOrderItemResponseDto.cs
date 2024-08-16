@@ -9,5 +9,6 @@ public class PurchaseOrderItemResponseDto
     public int OrderedQuantity { get; set; }
     public int ShippedQuantity { get; set; }
     public int DeliveredQuantity { get; set; }
+    public decimal ItemPrice { get; set; }
     public ItemPickupStatus? ItemPickupStatus { get; set; }
 }

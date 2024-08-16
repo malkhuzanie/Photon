@@ -1,3 +1,4 @@
+using Photon.Models.PurchaseOrder;
 using Photon.src.Models;
 
 namespace Photon.DTOs.Response;
@@ -11,4 +12,5 @@ public class PickListItemResponseDto
   public string? PickLocation { get; set; }
   public Container? FromContainer { get; set; }
   public Container? ToContainer { get; set; }
+  public ItemPickupStatus ItemPickupStatus { get; set; }
 }
