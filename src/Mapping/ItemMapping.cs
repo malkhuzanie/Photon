@@ -13,7 +13,7 @@ namespace Photon.Mapping
         public static async Task<Item> ToItem(this ItemDto itemDto, PhotonContext context)
         {
             var facility = await context.Facilities.FindAsync(itemDto.FacilityId);
-            return new Item
+            Item item = new()
             {
                 Name = itemDto.Name,
                 Count = itemDto.Count,
@@ -34,8 +34,18 @@ namespace Photon.Mapping
                     ShippingCost = 0,
                     Company = null,
                     PutawayType = null,
-                }
+                },
             };
+            foreach (var materialId in itemDto.Materials)
+            {
+                var material = await context.Materials.FindAsync(materialId);
+                if (material == null)
+                {
+                    throw new IllegalArgumentException($"Material with ID {materialId} does not exist.");
+                }
+                item.Materials.Add(material); 
+            }
+            return item;
         }
     }
 }

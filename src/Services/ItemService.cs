@@ -46,7 +46,7 @@ namespace Photon.Services
       if (!await context.RecordExists<Facility>(f => f.Id == _itemDto.FacilityId))
         throw new IllegalArgumentException("The Facility doesn't exist");
       var item = await _itemDto.ToItem(context);
-      context.Items.Add(item);
+      await context.Items.AddAsync(item);
       await context.SaveChangesAsync();
       return item;
     }

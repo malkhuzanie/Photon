@@ -13,5 +13,6 @@ namespace Photon.DTOs.Request
 
         public int FacilityId { get; set; }
 
+        public ICollection<int> Materials { get; set; } = [];
     }
 }
