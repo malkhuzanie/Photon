@@ -6,10 +6,11 @@ using Photon.Extensions;
 using Photon.Interfaces;
 using Photon.Mapping;
 using Photon.Models;
+using Photon.Models.PurchaseOrder;
 
 namespace Photon.Services;
 
-public class PickListService(PhotonContext context, PurchaseOrderService service)
+public class PickListService(PhotonContext context, PurchaseOrderService poService)
   : IEntityService<PickList, PickListDto>
 {
   public async Task<PickList?> GetById(int plNbr)
@@ -63,6 +64,22 @@ public class PickListService(PhotonContext context, PurchaseOrderService service
     return pickList;
   }
 
+  private async Task UpdatePurchaseOrderItemsPickupStatus(PickList pl)
+  {
+    HashSet<PurchaseOrder> orders = [];
+    foreach (var item in pl.Items)
+    {
+      poService.UpdateItemPickupStatus(
+        item.PurchaseOrder,
+        item.Item,
+        item.ItemPickupStatus!
+      );
+      orders.Add(item.PurchaseOrder);
+    }
+    orders.ToList().ForEach(poService.CheckIfPurchaseOrderIsReady);
+    await context.SaveChangesAsync();
+  }
+  
   public async Task Update(int plNbr, PickListDto pickList)
   {
     var pl = await GetById(plNbr);
@@ -73,6 +90,7 @@ public class PickListService(PhotonContext context, PurchaseOrderService service
       );
     }
     pl.UpdateFrom(await pickList.ToPickList(context));
+    await UpdatePurchaseOrderItemsPickupStatus(pl);
   }
 
   public async Task<bool> Delete(int plNbr)

@@ -13,6 +13,14 @@ namespace Photon.Services;
 
 public class UserService(PhotonContext context) : IEntityService<User, UserDto>
 {
+  public async Task<IEnumerable<Role>> GetRoles(string username)
+  {
+    return (await context.Users.Where(u => u.Username == username)
+        .Include(u => u.Roles)
+        .FirstOrDefaultAsync()
+      )?.Roles ?? [];
+  }
+
   public async Task<int?> UsernameExists(string username)
   {
     return (await context.Users.Where(u => u.Username == username)
@@ -26,7 +34,7 @@ public class UserService(PhotonContext context) : IEntityService<User, UserDto>
       (await context.Users.SingleAsync(u => u.Id == id)).PasswordHash,
       password);
   }
-  
+
   public async Task<IEnumerable<User>> GetAll()
   {
     return await context.Users.Include(u => u.Facility)
@@ -59,7 +67,7 @@ public class UserService(PhotonContext context) : IEntityService<User, UserDto>
     await context.SaveChangesAsync();
     return user;
   }
-  
+
   public async Task<bool> Delete(int id)
   {
     if (await context.Users.FindAsync(id) is not { } user)
@@ -84,7 +92,7 @@ public class UserService(PhotonContext context) : IEntityService<User, UserDto>
     {
       throw new NotFoundException("user is not found in the database");
     }
-    
+
     user.UpdateFrom(
       await _user.ToUser(context),
       (usr) => { usr.Password = _user.Password; }

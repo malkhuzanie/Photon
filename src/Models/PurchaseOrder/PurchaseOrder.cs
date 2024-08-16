@@ -16,8 +16,7 @@ public class PurchaseOrder
 
   public virtual Facility? Facility { get; set; }
 
-  [JsonIgnore] 
-  public virtual ICollection<Item> Items { get; set; } = [];
+  [JsonIgnore] public virtual ICollection<Item> Items { get; set; } = [];
 
   public virtual ICollection<PurchaseOrderItem> PoItems { get; set; } = [];
 
@@ -32,5 +31,10 @@ public class PurchaseOrder
       true,
       (current, poItem) => current & poItem.ItemPickupStatus?.Status == "picked-up"
     );
+  }
+
+  public decimal TotalCost
+  {
+    get { return PoItems.Aggregate((decimal)0, (total, poItem) => total + poItem.PackedQuantity * poItem.ItemPrice); }
   }
 }

@@ -37,7 +37,7 @@ public static class InboundPurchaseOrderMapping
       Supplier = supplier!,
       Status = status!,
       Facility = facility!,
-      PoItems = po.Items.Select(item => item.ToPurchaseOrderItem(context).Result).ToList()
+      PoItems = po.Items.Select(item => item.ToPurchaseOrderItem(context).Result).ToList(),
     };
   }
 
@@ -54,7 +54,8 @@ public static class InboundPurchaseOrderMapping
       Supplier = po.Supplier,
       Status = po.Status,
       Facility = po.Facility!,
-      Items = po.PoItems.Select(item => item.ToPurchaseOrderItemResponseDto())
+      Items = po.PoItems.Select(item => item.ToPurchaseOrderItemResponseDto()),
+      TotalCost = po.TotalCost
     };
   }
 }

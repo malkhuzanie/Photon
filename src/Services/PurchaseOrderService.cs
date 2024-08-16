@@ -22,16 +22,12 @@ public class PurchaseOrderService(PhotonContext context)
     Item item,
     ItemPickupStatus itemPickupStatus)
   {
-    var poItem = po.PoItems.FirstOrDefault(poi => poi.Item == item);
-
-    if (poItem == null)
+    if (po.PoItems.FirstOrDefault(poi => poi.Item == item) is { } poItem)
     {
-      return;
-    }
-
-    if (poItem.ItemPickupStatus?.Status != itemPickupStatus.Status)
-    {
-      poItem.ItemPickupStatus = itemPickupStatus;
+      if (poItem.ItemPickupStatus?.Status != itemPickupStatus.Status)
+      {
+        poItem.ItemPickupStatus = itemPickupStatus;
+      }
     }
   }
 }

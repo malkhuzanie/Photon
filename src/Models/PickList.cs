@@ -1,7 +1,5 @@
 namespace Photon.Models;
 
-using PO = Photon.Models.PurchaseOrder.PurchaseOrder;
-
 public class PickList
 {
   public int PlNbr { get; set; }

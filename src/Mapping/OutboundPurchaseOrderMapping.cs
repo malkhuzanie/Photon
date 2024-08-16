@@ -60,7 +60,8 @@ public static class OutboundPurchaseOrderMapping
       Address = po.Address,
       Status = po.Status,
       Facility = po.Facility!,
-      Items = po.PoItems.Select(item => item.ToPurchaseOrderItemResponseDto())
+      Items = po.PoItems.Select(item => item.ToPurchaseOrderItemResponseDto()),
+      TotalCost = po.TotalCost
     };
   }
 }

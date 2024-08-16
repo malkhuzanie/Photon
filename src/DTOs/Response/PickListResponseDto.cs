@@ -6,7 +6,7 @@ public class PickListResponseDto
   
   public int UserId { get; set; }
   
-  public string Name { get; set; }
+  public string? Name { get; set; }
 
-  public IEnumerable<PickListItemResponseDto> Items { get; set; }
+  public IEnumerable<PickListItemResponseDto>? Items { get; set; }
 }

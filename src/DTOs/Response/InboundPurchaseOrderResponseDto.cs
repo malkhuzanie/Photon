@@ -10,8 +10,9 @@ public class InboundPurchaseOrderResponseDto
   public DateTime ShipDate { get; set; }
   public DateTime DeliveryDate { get; set; }
   public DateTime CancelDate { get; set; }
-  public Facility Facility { get; set; }
-  public Supplier Supplier { get; set; }
-  public PurchaseOrderStatus Status { get; set; }
-  public IEnumerable<PurchaseOrderItemResponseDto> Items { get; set; } 
+  public Facility? Facility { get; set; }
+  public Supplier? Supplier { get; set; }
+  public PurchaseOrderStatus? Status { get; set; }
+  public IEnumerable<PurchaseOrderItemResponseDto> Items { get; set; } = [];
+  public decimal TotalCost { get; set; }
 }

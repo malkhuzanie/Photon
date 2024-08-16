@@ -13,6 +13,7 @@ public class OutboundPurchaseOrderResponseDto
   public Facility? Facility { get; set; }
   public Customer? Customer { get; set; }
   public string? Address { get; set; }
-  public PurchaseOrderStatus Status { get; set; }
-  public IEnumerable<PurchaseOrderItemResponseDto> Items { get; set; } 
+  public PurchaseOrderStatus? Status { get; set; }
+  public IEnumerable<PurchaseOrderItemResponseDto> Items { get; set; } = [];
+  public decimal TotalCost { get; set; }
 }
