@@ -12,6 +12,7 @@ using Photon.src.Services;
 using Serilog;
 using System.Reflection;
 using Photon.Interfaces;
+using Photon.Services.ReportServices;
 
 namespace Photon.Services;
 
@@ -123,5 +124,7 @@ public static class Extensions
     services.AddScoped<PickListService>();
     services.AddScoped<PickListItemService>();
     services.AddScoped<ItemPickupStatusService>();
+    services.AddScoped<InboundPurchaseOrderReportService>();
+    services.AddScoped<OutboundPurchaseOrderReportService>();
   }
 }

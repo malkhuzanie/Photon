@@ -21,7 +21,8 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="*" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="*" />
 		<PackageReference Include="Microsoft.AspNetCore.Cors" Version="*" />
-    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="*" />
+		<PackageReference Include="Microsoft.AspNetCore.SignalR" Version="*" />
+		<PackageReference Include="Bogus" Version="*" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -42,7 +43,6 @@
 
 	<ItemGroup>
 		<Folder Include="Migrations\" />
-		<Folder Include="src\Services\ReportService\" />
 	</ItemGroup>
 
 </Project>

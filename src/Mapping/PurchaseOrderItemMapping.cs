@@ -16,9 +16,8 @@ public static class PurchaseOrderItemMapping
     if (await context.Items.FindAsync(poItem.ItemId) is { } item)
     {
       var pickupStatus = await context.ItemPickupStatus
-        .Where(s => s.Id == poItem.ItemPickupStatusId)
-        .DefaultIfEmpty(await context.ItemPickupStatus.FindAsync(1))
-        .FirstOrDefaultAsync();
+        .FirstOrDefaultAsync(s => s.Id == poItem.ItemPickupStatusId) 
+        ?? await context.ItemPickupStatus.FindAsync(1);
 
       return new PurchaseOrderItem
       {
