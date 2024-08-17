@@ -12,7 +12,8 @@ public static class Extensions
     {
       var services = scope.ServiceProvider;
       var context = services.GetRequiredService<PhotonContext>();
-      context.Database.EnsureCreated();
+      // context.Database.EnsureCreated();
+      context.Database.Migrate();
       DbInitialiser.Initialise(context);
     }
   }
