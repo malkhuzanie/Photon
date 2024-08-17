@@ -8,6 +8,8 @@ public class PurchaseOrderItemDto
   
   public int OrderedQuantity { get; set; }
   
+  public int PackedQuantity { get; set; }
+  
   public int ShippedQuantity { get; set; }
   
   public int DeliveredQuantity { get; set; }

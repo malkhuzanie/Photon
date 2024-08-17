@@ -35,6 +35,12 @@ public class PurchaseOrder
 
   public decimal TotalCost
   {
-    get { return PoItems.Aggregate((decimal)0, (total, poItem) => total + poItem.PackedQuantity * poItem.ItemPrice); }
+    get
+    {
+      return PoItems.Aggregate(
+        (decimal)0, 
+        (total, poItem) => total + poItem.PackedQuantity * poItem.ItemPrice
+      );
+    }
   }
 }

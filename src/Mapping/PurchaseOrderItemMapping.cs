@@ -23,6 +23,7 @@ public static class PurchaseOrderItemMapping
       {
         ItemId = item.Id,
         OrderedQuantity = poItem.OrderedQuantity,
+        PackedQuantity = poItem.PackedQuantity,
         ShippedQuantity = poItem.ShippedQuantity,
         DeliveredQuantity = poItem.DeliveredQuantity,
         ItemPickupStatus = pickupStatus
@@ -40,7 +41,8 @@ public static class PurchaseOrderItemMapping
       Id = poItem.ItemId,
       Name = poItem.Item?.Name,
       OrderedQuantity = poItem.OrderedQuantity,
-      ShippedQuantity = poItem.DeliveredQuantity,
+      PackedQuantity = poItem.PackedQuantity,
+      ShippedQuantity = poItem.ShippedQuantity,
       DeliveredQuantity = poItem.DeliveredQuantity,
       ItemPrice = poItem.ItemPrice,
       ItemPickupStatus = poItem.ItemPickupStatus

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Photon.Services;
 using Photon.Models;
@@ -8,6 +9,7 @@ namespace Photon.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "ADMINISTRATOR, SUPERVISOR")]
     public class CompanyController(CompanyService service) : ControllerBase
     {
 

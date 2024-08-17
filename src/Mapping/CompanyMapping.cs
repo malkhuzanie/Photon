@@ -9,7 +9,7 @@ namespace Photon.Mapping
 {
     public static class CompanyMapping
     {
-        public static async Task<Company> ToCompany(this CompanyDto companyDto)
+        public static Company ToCompany(this CompanyDto companyDto)
         {
             return new Company
             {

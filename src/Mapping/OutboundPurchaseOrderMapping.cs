@@ -26,12 +26,6 @@ public static class OutboundPurchaseOrderMapping
       throw new NotFoundException($"{vRes.Msg} doesn't exist");
     }
 
-    IList<PurchaseOrderItem> items = [];
-    foreach (var item in po.Items)
-    {
-      items.Add(await item.ToPurchaseOrderItem(context));
-    }
-
     return new OutboundPurchaseOrder
     {
       OrderDate = po.OrderDate,
@@ -42,7 +36,7 @@ public static class OutboundPurchaseOrderMapping
       Facility = facility!,
       Customer = customer!,
       Address = po.Address,
-      PoItems = items
+      PoItems = po.Items.Select(item => item.ToPurchaseOrderItem(context).Result).ToList(),
     };
   }
 

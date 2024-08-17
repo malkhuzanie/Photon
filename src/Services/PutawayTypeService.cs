@@ -30,7 +30,7 @@ namespace Photon.Services
             if (await context.RecordExists<PutawayType>(pt => pt.PutawayTypeCode == dto.PutawayTypeCode))
                 throw new IllegalArgumentException("A PutawayType with the same code already exists");
 
-            var putawayType = await dto.ToPutawayType();
+            var putawayType = dto.ToPutawayType();
             context.PutawayTypes.Add(putawayType);
             await context.SaveChangesAsync();
             return putawayType;

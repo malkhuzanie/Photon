@@ -3,6 +3,7 @@ using Photon.DTOs.Response;
 using Photon.Exceptions;
 using Photon.Mapping;
 using Photon.Services;
+using Serilog;
 
 namespace Photon.Controllers;
 
@@ -30,6 +31,8 @@ public class OutboundPurchaseOrderController(OutboundPurchaseOrderService servic
     OutboundPurchaseOrderDto _po)
   {
     var po = (await service.Create(_po)).ToOutboundPurchaseOrderResponseDto();
+    Log.Information(" --------------------------------------------------------- ");
+    Log.Information("{A}", po.TotalCost);
     return CreatedAtAction(nameof(GetById), new { poNbr = po.PoNbr }, po);
   }
 

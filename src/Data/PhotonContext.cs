@@ -37,6 +37,31 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
 
     base.OnModelCreating(modelBuilder);
   }
+  
+  public static PhotonContext Create()
+  {
+    IConfiguration config = new ConfigurationBuilder()
+      .SetBasePath(Directory.GetCurrentDirectory())
+      .AddJsonFile("appsettings.json", true, true)
+      .Build();
+      
+    var optionsBuilder = new DbContextOptionsBuilder<PhotonContext>();
+        
+    optionsBuilder
+      .UseNpgsql(
+        $"""
+         User ID={config["DbConfig:UserId"]};
+         Host={config["DbConfig:Host"]}; 
+         Password={config["DbConfig:Password"]}; 
+         Database={config["DbConfig:Database"]};
+         Include Error Detail=true
+         """)
+      .UseLazyLoadingProxies()
+      .UseSnakeCaseNamingConvention()
+      .EnableSensitiveDataLogging();
+        
+    return new PhotonContext(optionsBuilder.Options, config);
+  }
 
   public DbSet<Permission> Permissions { get; set; }
   public DbSet<Role> Roles { get; set; }
@@ -60,4 +85,5 @@ public class PhotonContext(DbContextOptions<PhotonContext> options, IConfigurati
   public DbSet<PutawayType> PutawayTypes { get; set; }
   public DbSet<Company> Companies { get; set; }
   public DbSet<ItemMaster> ItemMasters { get; set; }
+  public DbSet<Shipment> Shipments { get; set; }
 }

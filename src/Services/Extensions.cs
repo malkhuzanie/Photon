@@ -11,6 +11,7 @@ using Photon.src.Models;
 using Photon.src.Services;
 using Serilog;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using Photon.Interfaces;
 using Photon.Services.ReportServices;
 using Photon.srs.Services;
@@ -38,7 +39,7 @@ public static class Extensions
           ValidIssuer = Config["Jwt:Issuer"],
           ValidAudience = Config["Jwt:Audience"],
           IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(Config["Jwt:Key"])
+            Encoding.UTF8.GetBytes(Config["Jwt:Key"]!)
           )
         };
         options.Events = new JwtBearerEvents
@@ -104,6 +105,21 @@ public static class Extensions
       });
     });
 
+    services.AddDbContextFactory<PhotonContext>(options =>
+    {
+      options.UseNpgsql(
+          $"""
+          User ID={Config["DbConfig:UserId"]};
+          Host={Config["DbConfig:Host"]}; 
+          Password={Config["DbConfig:Password"]}; 
+          Database={Config["DbConfig:Database"]};
+          Include Error Detail=true
+          """)
+      .UseLazyLoadingProxies()
+      .UseSnakeCaseNamingConvention()
+      .EnableSensitiveDataLogging();
+    });
+    
     services.AddNpgsql<PhotonContext>("Host=localhost; Database=photon");
     services.AddScoped<FacilityService>();
     services.AddScoped<UserService>();

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Photon.Data;
@@ -11,9 +12,11 @@ using Photon.Data;
 namespace Photon.Migrations
 {
     [DbContext(typeof(PhotonContext))]
-    partial class PhotonContextModelSnapshot : ModelSnapshot
+    [Migration("20240817045103_AddAddressObPo")]
+    partial class AddAddressObPo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -484,21 +487,6 @@ namespace Photon.Migrations
                     b.ToTable("roles", (string)null);
                 });
 
-            modelBuilder.Entity("Photon.Models.Shipment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasColumnName("id");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.HasKey("Id")
-                        .HasName("pk_shipments");
-
-                    b.ToTable("shipments", (string)null);
-                });
-
             modelBuilder.Entity("Photon.Models.Supplier", b =>
                 {
                     b.Property<int>("Id")
@@ -763,10 +751,6 @@ namespace Photon.Migrations
                 {
                     b.HasBaseType("Photon.Models.PurchaseOrder.PurchaseOrder");
 
-                    b.Property<int?>("ShipmentId")
-                        .HasColumnType("integer")
-                        .HasColumnName("shipment_id");
-
                     b.Property<int>("StatusId")
                         .HasColumnType("integer")
                         .HasColumnName("status_id");
@@ -774,9 +758,6 @@ namespace Photon.Migrations
                     b.Property<int>("SupplierId")
                         .HasColumnType("integer")
                         .HasColumnName("supplier_id");
-
-                    b.HasIndex("ShipmentId")
-                        .HasDatabaseName("ix_inbound_purchase_orders_shipment_id");
 
                     b.HasIndex("StatusId")
                         .HasDatabaseName("ix_inbound_purchase_orders_status_id");
@@ -1051,11 +1032,6 @@ namespace Photon.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_inbound_purchase_orders_purchase_orders_po_nbr");
 
-                    b.HasOne("Photon.Models.Shipment", null)
-                        .WithMany("PurchaseOrders")
-                        .HasForeignKey("ShipmentId")
-                        .HasConstraintName("fk_inbound_purchase_orders_shipments_shipment_id");
-
                     b.HasOne("Photon.Models.PurchaseOrder.Inbound.InboundPurchaseOrderStatus", "Status")
                         .WithMany("InboundPurchaseOrders")
                         .HasForeignKey("StatusId")
@@ -1133,11 +1109,6 @@ namespace Photon.Migrations
             modelBuilder.Entity("Photon.Models.PurchaseOrder.PurchaseOrder", b =>
                 {
                     b.Navigation("PoItems");
-                });
-
-            modelBuilder.Entity("Photon.Models.Shipment", b =>
-                {
-                    b.Navigation("PurchaseOrders");
                 });
 #pragma warning restore 612, 618
         }

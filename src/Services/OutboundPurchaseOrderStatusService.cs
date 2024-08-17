@@ -25,17 +25,17 @@ public class OutboundPurchaseOrderStatusService(PhotonContext context)
       .ToListAsync();
   }
 
-  public async Task<PurchaseOrderStatusResponseDto> Create(StatusRequestDto arg)
+  public Task<PurchaseOrderStatusResponseDto> Create(StatusRequestDto arg)
   {
     throw new NotImplementedException();
   }
 
-  public async Task Update(int id, StatusRequestDto arg)
+  public Task Update(int id, StatusRequestDto arg)
   {
     throw new NotImplementedException();
   }
 
-  public async Task<bool> Delete(int id)
+  public Task<bool> Delete(int id)
   {
     throw new NotImplementedException();
   }

@@ -12,7 +12,7 @@ public class User
   public required string Email { get; set; }
 
   [JsonIgnore] 
-  public string PasswordHash { get; private set; }
+  public string? PasswordHash { get; private set; }
   public string Password
   {
     set => PasswordHash = Hasher.Hash(value).Result;

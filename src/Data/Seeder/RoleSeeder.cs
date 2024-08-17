@@ -8,6 +8,7 @@ public class RoleSeeder(PhotonContext context) : ISeeder
   {
     var roles = new Dictionary<string, string>()
     {
+      {"ADMINISTRATOR", "Administration"},
       {"SUPERVISOR", "Supervising"}, {"SHIPPING", "Shipping"},
       {"RECEIVING", "Receiving"}, {"MASTER DATA MANAGEMENT", "Data Entry" },
       {"ORDER MANAGEMENT", "Order Management"}

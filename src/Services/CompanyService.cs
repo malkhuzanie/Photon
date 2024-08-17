@@ -32,7 +32,7 @@ namespace Photon.Services
             if (await context.RecordExists<Company>(c => c.Name == companyDto.Name))
                 throw new IllegalArgumentException("A company with the same name already exists");
 
-            var company = await companyDto.ToCompany();
+            var company = companyDto.ToCompany();
             context.Companies.Add(company);
             await context.SaveChangesAsync();
             return company;

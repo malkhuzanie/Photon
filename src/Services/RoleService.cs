@@ -10,9 +10,29 @@ using Photon.Interfaces;
 
 namespace Photon.Services;
 
+public enum RoleName
+{
+  Administrator, Supervisor, Receiving, Shipping, MasterDataManagement, OrderManagement
+}
+
 public class RoleService(PhotonContext context)
   : IEntityService<Role, RoleDto>
 {
+  public async Task<Role?> GetRole(RoleName role)
+  {
+    string roleName = role switch
+    {
+      RoleName.Administrator => roleName = "ADMINISTRATOR",
+      RoleName.Supervisor => roleName = "SUPERVISOR",
+      RoleName.Receiving => roleName = "RECEIVING",
+      RoleName.Shipping => roleName = "SHIPPING",
+      RoleName.MasterDataManagement => roleName = "MASTER DATA MANAGEMENT",
+      RoleName.OrderManagement => roleName = "ORDER MANAGEMENT",
+      _ => ""
+    };
+    return await context.Roles.FirstOrDefaultAsync(r => r.Name == roleName);
+  }
+  
   private async Task<int?> RoleNameExists(string name)
   {
     return (await context

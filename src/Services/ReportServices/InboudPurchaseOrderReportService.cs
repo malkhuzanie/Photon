@@ -3,174 +3,155 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using Photon.Models.PurchaseOrder;
 using Photon.Models.PurchaseOrder.Inbound;
-using Photon.Models;
-using System.IO;
-using System.Threading.Tasks;
-using QuestPDF.Previewer;
 
 namespace Photon.Services.ReportServices
 {
-  public class InboundPurchaseOrderReportService
+  public class InboundPurchaseOrderReportService(InboundPurchaseOrderService service)
   {
-    private readonly InboundPurchaseOrderService _service;
-
-    public InboundPurchaseOrderReportService(InboundPurchaseOrderService service)
-    {
-      _service = service;
-    }
-
-    public static async Task<MemoryStream> GeneratePdfReportForPurchaseOrder(
+    private static MemoryStream GeneratePdfReportForPurchaseOrder(
       InboundPurchaseOrder purchaseOrder)
     {
-      QuestPDF.Settings.License = LicenseType.Community;
       var pdfStream = new MemoryStream();
-      await Task.Run(() =>
-      {
-        Document.Create(container =>
-        {
-          container.Page(page =>
-          {
-            page.Size(PageSizes.A4);
-            page.Margin(1, Unit.Centimetre);
-            page.PageColor(Colors.White);
-            page.DefaultTextStyle(x => x.FontSize(9).FontFamily("Arial"));
+      QuestPDF.Settings.License = LicenseType.Community;
 
-            page.Header().Element(x => ComposeHeader(x, purchaseOrder));
-            page.Content().Element(x => ComposeContent(x, purchaseOrder));
-            page.Footer().Element(ComposeFooter);
-          });
-        }).ShowInPreviewer();
-      });
+      Document.Create(container =>
+      {
+        container.Page(page =>
+        {
+          page.Size(PageSizes.A4);
+          page.Margin(2, Unit.Centimetre);
+          page.PageColor(Colors.White);
+          page.DefaultTextStyle(x => x.FontSize(10));
+
+          page.Header().Element(container => ComposeHeader(container, purchaseOrder));
+          page.Content().Element(container => ComposeContent(container, purchaseOrder));
+          page.Footer().Element(ComposeFooter);
+        });
+      }).GeneratePdf(pdfStream);
 
       pdfStream.Position = 0;
       return pdfStream;
     }
 
-    static void ComposeHeader(IContainer container, InboundPurchaseOrder purchaseOrder)
+    private static void ComposeHeader(IContainer container, PurchaseOrder purchaseOrder)
     {
-      container.Column(column =>
+      var titleStyle = TextStyle.Default.FontSize(20).SemiBold().Color(Colors.Blue.Medium);
+
+      container.Row(row =>
       {
-        column.Item().Row(row =>
+        row.RelativeItem().Column(column =>
         {
-          row.RelativeItem().Column(innerColumn =>
-          {
-            innerColumn.Item().Text("PURCHASE ORDER").FontSize(24).Bold();
-            innerColumn.Item().Text($"Order #: {purchaseOrder.PoNbr}").FontSize(14).Bold();
-          });
-
-          row.RelativeItem().AlignRight().Text($"Date: {DateTime.Now:d}").FontSize(10);
+          column.Item().Text($"Purchase Order #{purchaseOrder.PoNbr}").Style(titleStyle);
+          column.Item().Text($"Order Date: {purchaseOrder.OrderDate:d}").FontSize(9);
+          column.Spacing(2);
+          column.Item().Text($"Facility: {purchaseOrder.Facility?.FacilityCode ?? "N/A"}").FontSize(9);
+          column.Spacing(4);
         });
-
-        column.Item().PaddingTop(5).BorderBottom(2).BorderColor(Colors.Black);
+        
+        // row.ConstantItem(100).Height(50).Placeholder();
       });
     }
 
-    static void ComposeContent(IContainer container, InboundPurchaseOrder purchaseOrder)
+    private static void ComposeContent(IContainer container, PurchaseOrder purchaseOrder)
     {
-      container.PaddingVertical(20).Column(column =>
+      container.PaddingVertical(10).Column(column =>
       {
+        column.Spacing(10);
+
+        column.Item().Element(container => ComposeOrderDetails(container, purchaseOrder));
+
+        if (purchaseOrder is InboundPurchaseOrder inboundOrder)
+        {
+          column.Item().Element(container => ComposeOutboundDetails(container, inboundOrder));
+        }
+
         column.Spacing(20);
 
-        column.Item().Row(row =>
-        {
-          row.RelativeItem().Element(x => ComposeSupplierDetails(x, purchaseOrder.Supplier));
-          row.ConstantItem(50);
-          row.RelativeItem().Element(x => ComposeFacilityDetails(x, purchaseOrder.Facility));
-        });
-
-        column.Item().Element(x => ComposePurchaseOrderDetails(x, purchaseOrder));
-        column.Item().Element(x => ComposeItemsTable(x, purchaseOrder));
+        column.Item().Element(container => ComposeItemsTable(container, purchaseOrder));
       });
     }
 
-    static void ComposePurchaseOrderDetails(IContainer container, InboundPurchaseOrder purchaseOrder)
+    private static void ComposeOrderDetails(IContainer container, PurchaseOrder purchaseOrder)
     {
-      container.Border(1).BorderColor(Colors.Black).Padding(10)
+      container.ShowEntire().BorderTop(1).BorderBottom(1)
+        .Background(Colors.Grey.Lighten4).Padding(10)
         .Column(column =>
         {
           column.Spacing(5);
-          column.Item().Text("Purchase Order Details").FontSize(12).Bold().Underline();
-          column.Item().Text($"Status: {purchaseOrder.Status.Status}");
+          column.Item().Text("Order Details").FontSize(12).Bold();
           column.Item().Text($"Order Date: {purchaseOrder.OrderDate:d}");
           column.Item().Text($"Ship Date: {purchaseOrder.ShipDate:d}");
           column.Item().Text($"Delivery Date: {purchaseOrder.DeliveryDate:d}");
           column.Item().Text($"Cancel Date: {purchaseOrder.CancelDate:d}");
+          column.Item().Text($"Status: {(purchaseOrder.IsReady() ? "Ready" : "Pending")}");
+          column.Item().Text($"Total Cost: ${purchaseOrder.TotalCost:N2}");
         });
     }
 
-    static void ComposeSupplierDetails(IContainer container, Supplier supplier)
-    {
-      container.Border(1).BorderColor(Colors.Black).Padding(10).Column(column =>
-      {
-        column.Spacing(5);
-        column.Item().Text("Supplier").FontSize(12).Bold().Underline();
-        column.Item().Text(supplier.Name);
-        // Add more supplier details as needed
-      });
-    }
-
-    static void ComposeFacilityDetails(IContainer container, Facility? facility)
-    {
-      container.Border(1).BorderColor(Colors.Black).Padding(10).Column(column =>
-      {
-        column.Spacing(5);
-        column.Item().Text("Ship To Facility").FontSize(12).Bold().Underline();
-        column.Item().Text(facility?.FacilityCode ?? "N/A");
-        // Add more facility details as needed
-      });
-    }
-
-    static void ComposeItemsTable(IContainer container, InboundPurchaseOrder purchaseOrder)
+    private static void ComposeItemsTable(IContainer container, PurchaseOrder purchaseOrder)
     {
       container.Table(table =>
       {
         table.ColumnsDefinition(columns =>
         {
-          columns.ConstantColumn(30); // Item No.
-          columns.RelativeColumn(3); // Item Name
-          columns.RelativeColumn(); // Ordered Qty
-          columns.RelativeColumn(); // Shipped Qty
-          columns.RelativeColumn(); // Delivered Qty
-          columns.RelativeColumn(); // Pickup Status
+          columns.RelativeColumn(3);
+          columns.RelativeColumn();
+          columns.RelativeColumn();
+          columns.RelativeColumn();
+          columns.RelativeColumn();
+          columns.RelativeColumn();
         });
 
-        // Add table header
         table.Header(header =>
         {
-          header.Cell().Element(CellStyle).Text("#").SemiBold();
           header.Cell().Element(CellStyle).Text("Item Name").SemiBold();
-          header.Cell().Element(CellStyle).AlignRight().Text("Ordered").SemiBold();
-          header.Cell().Element(CellStyle).AlignRight().Text("Shipped").SemiBold();
-          header.Cell().Element(CellStyle).AlignRight().Text("Delivered").SemiBold();
-          header.Cell().Element(CellStyle).Text("     " + "Status").SemiBold();
+          header.Cell().Element(CellStyle).AlignRight().Text("Ordered Qty").SemiBold();
+          header.Cell().Element(CellStyle).AlignRight().Text("Packed Qty").SemiBold();
+          header.Cell().Element(CellStyle).AlignRight().Text("Delivered Qty").SemiBold();
+          header.Cell().Element(CellStyle).Text("");
+          header.Cell().Element(CellStyle).Text("Pickup Status").SemiBold();
 
           static IContainer CellStyle(IContainer container)
           {
-            return container.DefaultTextStyle(x => x.SemiBold()).PaddingVertical(5).BorderBottom(1)
-              .BorderColor(Colors.Black);
+            return container.DefaultTextStyle(x => x.SemiBold())
+              .PaddingVertical(5).BorderBottom(1).BorderColor(Colors.Black);
           }
         });
 
-        // Add table content
-        int i = 0;
         foreach (var poItem in purchaseOrder.PoItems)
         {
-          table.Cell().Element(CellStyle).Text((++i).ToString());
           table.Cell().Element(CellStyle).Text(poItem.Item?.Name ?? "N/A");
           table.Cell().Element(CellStyle).AlignRight().Text(poItem.OrderedQuantity.ToString());
-          table.Cell().Element(CellStyle).AlignRight().Text(poItem.ShippedQuantity.ToString());
+          table.Cell().Element(CellStyle).AlignRight().Text(poItem.PackedQuantity.ToString());
           table.Cell().Element(CellStyle).AlignRight().Text(poItem.DeliveredQuantity.ToString());
-          table.Cell().Element(CellStyle).Text("     " + poItem.ItemPickupStatus?.Status ?? "N/A");
+          table.Cell().Element(CellStyle).Text("");
+          table.Cell().Element(CellStyle).Text(poItem.ItemPickupStatus?.Status ?? "N/A");
+          continue;
 
           static IContainer CellStyle(IContainer container)
           {
-            return container.BorderBottom(0.5f).BorderColor(Colors.Black).PaddingVertical(4);
+            return container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2)
+              .PaddingVertical(5);
           }
         }
       });
     }
 
-    static void ComposeFooter(IContainer container)
+    private static void ComposeOutboundDetails(IContainer container, InboundPurchaseOrder outboundOrder)
+    {
+      container.ShowEntire()
+        .BorderTop(1)
+        .BorderBottom(1)
+        .Background(Colors.Grey.Lighten4)
+        .Padding(10).Column(column =>
+        {
+          column.Spacing(5);
+          column.Item().Text("Supplier Information").FontSize(12).Bold();
+          column.Item().Text($"Name: {outboundOrder.Supplier.Name}");
+        });
+    }
+
+    private static void ComposeFooter(IContainer container)
     {
       container.AlignCenter().Text(x =>
       {
@@ -183,9 +164,10 @@ namespace Photon.Services.ReportServices
 
     public async Task<(MemoryStream, string)> GetPurchaseOrder(int id)
     {
-      return (await GeneratePdfReportForPurchaseOrder(
-          (await _service.GetById(id))!
-        ), $"InboundPurchaseOrder_{id}.pdf");
+      return (
+        GeneratePdfReportForPurchaseOrder((await service.GetById(id))!)
+        , $"InboundPurchaseOrder_{id}.pdf"
+      );
     }
   }
 }

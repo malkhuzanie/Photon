@@ -1,0 +1,52 @@
+{
+  "order_date": "2024-08-17T04:39:24.587Z",
+  "ship_date": "2024-08-17T04:39:24.587Z",
+  "delivery_date": "2024-08-17T04:39:24.587Z",
+  "cancel_date": "2024-08-17T04:39:24.587Z",
+  "facility_id": 1,
+  "customer_id": 1,
+  "address": "string",
+  "status_id": 1,
+  "items": [
+    {
+      "item_id": 17,
+      "ordered_quantity": 1,
+      "shipped_quantity": 1,
+      "delivered_quantity": 1,
+      "item_pickup_status_id": 1,
+      "packed_quantity": 1
+    },
+    {
+      "item_id": 18,
+      "ordered_quantity": 1,
+      "shipped_quantity": 1,
+      "delivered_quantity": 1,
+      "item_pickup_status_id": 1,
+      "packed_quantity": 1
+    },
+    {
+      "item_id": 19,
+      "ordered_quantity": 1,
+      "shipped_quantity": 1,
+      "delivered_quantity": 1,
+      "item_pickup_status_id": 1,
+      "packed_quantity": 1
+    },
+    {
+      "item_id": 20,
+      "ordered_quantity": 1,
+      "shipped_quantity": 1,
+      "delivered_quantity": 1,
+      "item_pickup_status_id": 1,
+      "packed_quantity": 1
+    },
+    {
+      "item_id": 21,
+      "ordered_quantity": 1,
+      "shipped_quantity": 1,
+      "delivered_quantity": 1,
+      "item_pickup_status_id": 1,
+      "packed_quantity": 1
+    }
+  ]
+}

@@ -5,14 +5,14 @@ using Photon.src.Models;
 
 namespace Photon.Mapping
 {
-    public static class PutawayTypeMapping
+  public static class PutawayTypeMapping
+  {
+    public static PutawayType ToPutawayType(this PutawayTypeDto dto)
     {
-        public static async Task<PutawayType> ToPutawayType(this PutawayTypeDto dto)
-        {
-            return new PutawayType
-            {
-                PutawayTypeCode = dto.PutawayTypeCode
-            };
-        }
+      return new PutawayType
+      {
+        PutawayTypeCode = dto.PutawayTypeCode
+      };
     }
+  }
 }

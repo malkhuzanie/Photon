@@ -6,7 +6,7 @@ public class MaterialSeeder(PhotonContext context) : ISeeder
 {
   public async Task Seed()
   {
-    context.Materials.AddRangeIfNotExists(
+    await context.Materials.AddRangeIfNotExists(
       (m) => m.Name,
       new Material { Name = "Aluminium"},
       new Material { Name = "Glass"},

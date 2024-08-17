@@ -12,7 +12,7 @@ public class PickListItem
  
   public int PoNbr { get; set; }
 
-  public virtual PO PurchaseOrder { get; set; }
+  public virtual PO? PurchaseOrder { get; set; }
   
   public int ItemId { get; set; }
   
