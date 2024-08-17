@@ -14,7 +14,7 @@ namespace Photon.Models
 
         public DateOnly ManufacturerDate { get; set; }
        
-        public DateOnly ExpiringDate { get; set; }
+        public DateOnly ExpiringDate { get; set; }  
 
         public int FacilityId { get; set; }
     

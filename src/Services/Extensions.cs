@@ -146,5 +146,6 @@ public static class Extensions
     services.AddScoped<OutboundPurchaseOrderReportService>();
     services.AddScoped<PurchaseOrderService>();
     services.AddScoped<CompanyService>();
+    services.AddScoped<EntityCountService>();
   }
 }
